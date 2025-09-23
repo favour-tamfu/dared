@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DARED | GET INVOLVED</title>
+    <meta
+      name="description"
+      content="Direct Action for Rights Equity and Development (DARED) is a non-profit organization dedicated to community empowerment, cultural preservation, and sustainable development in Cameroon."
+    />
+    <link rel="icon" type="image/png" href="Images/re.jpg" />
+
+    <!-- External Dependencies -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- === START: MODERN THEME CSS === -->
+    <style>
+      /* 1. Theme Variables & Root Styles */
+      :root {
+        --color-primary-dark: #2c3e50; /* Deep charcoal blue */
+        --color-primary-light: #f8f9fa; /* Soft off-white */
+        --color-accent: #e67e22; /* Warm, hopeful gold/ochre */
+        --color-text-dark: #34495e; /* Softer dark grey for text */
+        --color-text-light: #ecf0f1; /* Light grey for text on dark bg */
+        --font-heading: "Montserrat", sans-serif;
+        --font-body: "Lato", sans-serif;
+        --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      body {
+        font-family: var(--font-body);
+        background-color: var(--color-primary-light);
+        color: var(--color-text-dark);
+        line-height: 1.7;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      main {
+        flex-grow: 1;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: var(--font-heading);
+        font-weight: 700;
+        color: var(--color-primary-dark);
+      }
+
+      /* 2. Navbar Styling (Same as index.html) */
+      .navbar-custom {
+        background-color: var(--color-primary-dark);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        padding: 0.5rem 0;
+      }
+      .navbar-brand .navbar-logo {
+        height: 50px;
+        margin-right: 15px;
+        border-radius: 50%;
+        border: 2px solid var(--color-accent);
+      }
+      .navbar-brand .brand-main {
+        font-family: var(--font-heading);
+        font-weight: 700;
+        font-size: 1.6rem;
+        display: block;
+        line-height: 1.1;
+        color: var(--color-text-light);
+      }
+      .navbar-brand .brand-subtitle {
+        font-family: var(--font-body);
+        font-size: 0.65rem;
+        font-weight: 400;
+        color: var(--color-text-light);
+        opacity: 0.8;
+        display: block;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .navbar-custom .navbar-nav .nav-link {
+        font-family: var(--font-heading);
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 0.5rem 1.2rem;
+        transition: color 0.3s ease;
+      }
+      .navbar-custom .navbar-nav .nav-link:hover,
+      .navbar-custom .navbar-nav .nav-link:focus {
+        color: #ffffff;
+      }
+      .navbar-custom .navbar-nav .nav-link.active {
+        color: var(--color-accent);
+      }
+      .navbar-custom .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .navbar-custom .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      /* 3. Hero Section */
+      .page-hero {
+        background-image: linear-gradient(
+            rgba(44, 62, 80, 0.7),
+            rgba(44, 62, 80, 0.7)
+          ),
+          url("Images/BA.jpg"); /* Using an existing image. Change if needed. */
+        background-size: cover;
+        background-position: center;
+        padding: 5rem 1rem;
+        text-align: center;
+        color: #ffffff;
+      }
+      .page-hero h1 {
+        color: #ffffff;
+        font-size: 3.5rem;
+        font-weight: 700;
+      }
+      .page-hero p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 1rem auto 0 auto;
+        opacity: 0.9;
+      }
+
+      /* 4. Main Content & Involvement Cards */
+      .involvement-container {
+        max-width: 1000px;
+        margin: 3rem auto;
+        padding: 0 1rem;
+        display: grid;
+        gap: 2rem;
+      }
+      .involvement-card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-subtle);
+      }
+      .involvement-card h2 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+      }
+      .involvement-card p {
+        margin-bottom: 2rem;
+      }
+
+      /* 5. Form Styling */
+      .volunteer-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        color: var(--color-text-dark);
+      }
+      .volunteer-form input,
+      .volunteer-form select,
+      .volunteer-form textarea {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      .volunteer-form input:focus,
+      .volunteer-form select:focus,
+      .volunteer-form textarea:focus {
+        outline: none;
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+      }
+      .volunteer-form textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      /* 6. Themed Button Styling */
+      .btn-theme {
+        display: inline-block;
+        background-color: var(--color-accent);
+        color: white;
+        border: none;
+        padding: 0.8rem 2rem;
+        cursor: pointer;
+        border-radius: 8px;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      .btn-theme:hover {
+        background-color: #d35400; /* Darker accent */
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      /* 7. Footer (Same as index.html) */
+      .footer {
+        background-color: var(--color-primary-dark);
+        color: var(--color-text-light);
+        padding: 4rem 1rem 1rem 1rem;
+      }
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .footer h4 {
+        color: #ffffff;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+      .footer h4::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background-color: var(--color-accent);
+      }
+      .footer p,
+      .footer a {
+        color: var(--color-text-light);
+        opacity: 0.8;
+        text-decoration: none;
+        transition: color 0.3s ease, opacity 0.3s ease;
+      }
+      .footer a:hover {
+        color: var(--color-accent);
+        opacity: 1;
+      }
+      .social-media a {
+        margin-right: 15px;
+      }
+      .social-media img {
+        width: 32px;
+        height: 32px;
+        filter: grayscale(100%) brightness(5);
+        transition: filter 0.3s ease;
+      }
+      .social-media a:hover img {
+        filter: grayscale(0%) brightness(1);
+      }
+      .newsletter input[type="email"] {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.2);
+        color: white;
+        margin-bottom: 0.8rem;
+      }
+      .newsletter button {
+        width: 100%;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 8px;
+        background-color: var(--color-accent);
+        color: white;
+        cursor: pointer;
+        font-family: var(--font-heading);
+        font-weight: 700;
+        transition: background-color 0.3s ease;
+      }
+      .newsletter button:hover {
+        background-color: #d35400;
+      }
+      .copyright {
+        text-align: center;
+        padding-top: 2rem;
+        font-size: 0.9rem;
+        color: var(--color-text-light);
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container">
+          <!-- Brand Logo and Name -->
+          <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="Images/re.jpg" alt="DARED Logo" class="navbar-logo" />
+            <div>
+              <span class="brand-main">DARED</span>
+              <span class="brand-subtitle"
+                >Direct Action for Rights & Equity</span
+              >
+            </div>
+          </a>
+
+          <!-- Toggler for Mobile View -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Navbar Links -->
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto text-center">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="About.html">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="events.html">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="GetInvolved.html"
+                  >Get Involved</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="gallery.html">Gallery</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <h1>Get Involved</h1>
+        <p>
+          Your action can create lasting change. Join our mission to promote
+          rights and equity for all.
+        </p>
+      </section>
+
+      <div class="involvement-container">
+        <!-- Volunteer Section -->
+        <div class="involvement-card">
+          <h2>Become a Volunteer</h2>
+          <p>
+            Lend your time and skills to make a direct impact on our on-field
+            activities. Fill out the form below to express your interest.
+          </p>
+          <form
+            class="volunteer-form"
+            action="https://formspree.io/f/xpwrgozl"
+            method="post"
+          >
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="sex">Sex:</label>
+            <select id="sex" name="sex" required>
+              <option value="" disabled selected>Select an option</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="contact">Phone Number:</label>
+            <input type="tel" id="contact" name="contact" required />
+
+            <label for="location">Your Location (City/Region):</label>
+            <input type="text" id="location" name="location" required />
+
+            <label for="additional-info"
+              >Tell us a bit about yourself and why you'd like to
+              volunteer:</label
+            >
+            <textarea id="additional-info" name="additional-info"></textarea>
+
+            <input type="hidden" name="_next" value="thank-you.html" />
+
+            <button type="submit" class="btn-theme">
+              Submit Volunteer Form
+            </button>
+          </form>
+        </div>
+
+        <!-- Donate Section -->
+        <div class="involvement-card" style="text-align: center">
+          <h2>Make a Donation</h2>
+          <p>
+            Your generous contribution fuels our projects and helps us reach
+            more communities. Every donation, big or small, makes a significant
+            difference.
+          </p>
+          <a
+            href="https://wa.me/237680899916?text=Hello!%20I'm%20interested%20in%20donating%20to%20DARED.%20Could%20you%20please%20provide%20more%20details?"
+            target="_blank"
+            class="btn-theme"
+            >Contact for Donation Details</a
+          >
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="about-us">
+          <h4>About Us</h4>
+          <p>
+            DARED is a non-profit organization dedicated to promoting rights and
+            equity development in our community.
+          </p>
+        </div>
+        <div class="contact-info">
+          <h4>Contact Us</h4>
+          <p><a href="mailto:info@idared.org">info@idared.org</a></p>
+        </div>
+        <div class="social-media">
+          <h4>Follow Us</h4>
+          <a
+            href="https://www.facebook.com/profile.php?id=100088657673507"
+            target="_blank"
+            ><img src="Images/icons8-facebook-50.png" alt="Facebook"
+          /></a>
+          <a href="https://wa.me/237680899916?" target="_blank"
+            ><img src="Images/icons8-whatsapp-48.png" alt="Whatsapp"
+          /></a>
+        </div>
+        <div class="newsletter">
+          <h4>Subscribe to our Newsletter</h4>
+          <form action="https://formspree.io/f/xldnyoee" method="post">
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="copyright">© 2025 DARED. All rights reserved.</div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

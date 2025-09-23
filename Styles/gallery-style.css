@@ -1,0 +1,62 @@
+/* Styles/GalleryStyles.css */
+
+.gallery-container {
+    padding-top: 40px;
+    padding-bottom: 60px;
+}
+
+.gallery-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+/* Style the event titles in the accordion */
+.accordion-button {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #fff;
+    background-color: #0056b3; /* A nice blue for the active state */
+}
+
+/* The container for your photos/videos */
+.event-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Spacing between images */
+    padding-top: 15px;
+}
+
+.event-gallery img,
+.event-gallery .video-wrapper {
+    width: 100%;
+    max-width: 300px; /* Control max size of items */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.event-gallery img:hover {
+    transform: scale(1.05); /* A nice hover effect */
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
