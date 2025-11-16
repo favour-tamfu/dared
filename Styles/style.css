@@ -16,7 +16,6 @@ body {
   line-height: 1.7;
   margin: 0;
   padding: 0;
- 
 }
 
 h1,
@@ -102,7 +101,6 @@ main {
     height: 260px;
     border-radius: 8px;
   }
-  
 }
 
 @media (max-width: 600px) {
@@ -125,9 +123,11 @@ main {
   object-fit: cover;
   opacity: 0;
   transition: opacity 1.5s ease-in-out;
+  pointer-events: none;
 }
 .slideshow img.active {
   opacity: 1;
+  pointer-events: auto;
 }
 .event {
   display: grid;
