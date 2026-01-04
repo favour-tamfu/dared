@@ -31,6 +31,40 @@
 
     <!-- === START: MODERN THEME CSS === -->
     <link rel="stylesheet" href="Styles/style.css" />
+    <style>
+      /* Share icons - always visible, horizontal display */
+      .share-icons {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        margin-left: 8px;
+      }
+
+      .share-icons button {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: #fff;
+        border: 1px solid #e6e6e6;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.2s ease;
+      }
+      .share-icons button i {
+        color: #0d6efd;
+        font-size: 16px;
+      }
+      .share-icons button:hover {
+        background: #e6e6e6;
+        transform: scale(1.08);
+      }
+      .share-icons button:focus {
+        outline: 2px solid rgba(13, 110, 253, 0.18);
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -94,7 +128,107 @@
       </section>
 
       <section class="event">
-        <div class="event-card">
+        <div class="event-card" data-page-url="Page7.html">
+          <a href="Images/G-tree1.jpg"
+            ><img
+              src="Images/G-tree1.jpg"
+              alt="Tree plantin team at bafut palace"
+          /></a>
+          <div class="card-content">
+            <h4>Tree Planting at the Bafut Royal Palace</h4>
+            <p class="short-text">
+              Direct Action for Rights Equity and Development (DARED), with
+              funding support from the North West Regional Assembly and in
+              partnership with the Bafut Council and the UNESCO Heritage
+              Volunteer Program 2025, successfully carried out a large-scale
+              tree-planting initiative at the Bafut Royal Palace.
+            </p>
+            <p class="full-text">
+              Direct Action for Rights Equity and Development (DARED), with
+              funding support from the North West Regional Assembly and in
+              partnership with the Bafut Council and the UNESCO Heritage
+              Volunteer Program 2025, successfully carried out a large-scale
+              tree-planting initiative at the Bafut Royal Palace. The activity
+              focused on restoring the ecological balance of the palace
+              environment and strengthening the cultural and economic heritage
+              of the Bafut Kingdom. A total of 500 palm trees were planted
+              around the palace grounds. This effort responds to the growing
+              challenge of deforestation, which continues to threaten
+              biodiversity, soil quality, and the traditional landscapes
+              surrounding the palace. Beyond environmental restoration, the
+              initiative also promotes traditional economic sustainability,
+              particularly through revitalizing the long-standing practice of
+              palm wine tapping—a culturally significant and economically
+              valuable activity within Bafut communities. By planting palm
+              trees, the project supports future livelihoods while preserving an
+              integral part of local identity. This collaborative effort between
+              community institutions and cultural heritage partners marks an
+              important step in safeguarding both the natural environment and
+              the cultural traditions of the Bafut Kingdom for generations to
+              come.
+            </p>
+            <button class="show-more-btn">Show more</button>
+          </div>
+        </div>
+
+        <div class="event-card" data-page-url="Page8.html">
+          <a href="Images/Mend-main.jpg"
+            ><img src="Images/Mend-main.jpg" alt="Team at Mendankwe Museum"
+          /></a>
+          <div class="card-content">
+            <h4>
+              Cultural Heritage Engagement at Bamendankwen Palace and Museum
+            </h4>
+            <p class="short-text">
+              Direct Actions for Rights Equity and Development (DARED), in
+              partnership with the Regional Delegation of Arts and Culture and
+              the Bamendankwen Traditional Council, organized a cultural
+              heritage engagement activity with students from the Faculty of
+              Cultural Heritage and International Relations of the University of
+              Bamenda. The initiative aimed to strengthen youth involvement in
+              cultural preservation, promote volunteerism, and deepen students’
+              understanding of local heritage.
+            </p>
+            <p class="full-text">
+              Direct Actions for Rights Equity and Development (DARED), in
+              partnership with the Regional Delegation of Arts and Culture and
+              the Bamendankwen Traditional Council, organized a cultural
+              heritage engagement activity with students from the Faculty of
+              Cultural Heritage and International Relations of the University of
+              Bamenda. The initiative aimed to strengthen youth involvement in
+              cultural preservation, promote volunteerism, and deepen students’
+              understanding of local heritage. The day began with a welcome
+              address from the Regional Delegate for Arts and Culture, who
+              stressed the importance of preserving Cameroon’s cultural identity
+              and the active role students must play in safeguarding heritage.
+              This was followed by a warm reception from the Queen Mother of
+              Bamendankwen, who expressed gratitude for the visit and
+              highlighted the historical relevance of the palace. Participants
+              were then led through a guided tour of the Bamendankwen Palace by
+              the Queen Mother and the Palace Secretary. Students explored the
+              architectural layout, cultural symbols, and administrative
+              structures of the fondom, gaining practical insight into the
+              traditions and heritage they study academically. The visit
+              continued at the Bamendankwen Museum, where students viewed
+              historical artifacts and exhibits that trace the evolution of the
+              community. As part of the program’s hands-on engagement, students
+              joined palace custodians in a cleaning exercise to support the
+              maintenance and preservation of the museum. After the cleanup,
+              DARED’s Director, Tamfu Kilem Bongwa, delivered a talk on
+              volunteerism as a tool for heritage protection, emphasizing that
+              community participation remains essential for sustaining cultural
+              sites. He encouraged students to become proactive custodians of
+              cultural heritage in their communities. The activity concluded
+              with a shared meal, followed by an interactive question-and-answer
+              session involving the students, the Head of the Traditional
+              Council, and the Fon of Bamendankwen. This exchange allowed
+              participants to further explore issues of traditional
+            </p>
+            <button class="show-more-btn">Show more</button>
+          </div>
+        </div>
+
+        <div class="event-card" data-page-url="Page4.html">
           <a href="Images/Group1.jpg"
             ><img src="Images/Group1.jpg" alt="Kid's certificates "
           /></a>
@@ -207,7 +341,7 @@
         </div>
 
         <!-- The event card content remains the same -->
-        <div class="event-card">
+        <div class="event-card" data-page-url="Page1.html">
           <a href="Images/MC.jpg"
             ><img src="Images/MC.jpg" alt="Master Class"
           /></a>
@@ -233,7 +367,7 @@
           </div>
         </div>
 
-        <div class="event-card">
+        <div class="event-card" data-page-url="Page2.html">
           <a href="Images/L2.jpg"
             ><img src="Images/L2.jpg" alt="Master Class"
           /></a>
@@ -271,7 +405,7 @@
           </div>
         </div>
 
-        <div class="event-card">
+        <div class="event-card" data-page-url="Page4.html">
           <a href="Images/WS.jpg"
             ><img src="Images/WS.jpg" alt="Youth Empowerment Workshop"
           /></a>
@@ -302,7 +436,7 @@
           </div>
         </div>
 
-        <div class="event-card">
+        <div class="event-card" data-page-url="Page5.html">
           <a href="Images/FA2.jpg"
             ><img src="Images/FA2.jpg" alt="FILM FOR ADVOCACY WORKSHOP"
           /></a>
@@ -344,7 +478,7 @@
           </div>
         </div>
 
-        <div class="event-card">
+        <div class="event-card" data-page-url="Page6.html">
           <a href="Images/AC.jpg"
             ><img src="Images/AC.jpg" alt="Engaging Local Craftsmen"
           /></a>
@@ -379,7 +513,7 @@
           </div>
         </div>
 
-        <div class="event-card">
+        <div class="event-card" data-page-url="Page3.html">
           <a href="Images/CM.jpg"
             ><img src="Images/CM.jpg" alt="Engaging Local Craftsmen"
           /></a>
@@ -445,49 +579,142 @@
           </form>
         </div>
       </div>
-      <div class="copyright">© 2025 DARED. All rights reserved.</div>
+      <div class="copyright">© 2026 DARED. All rights reserved.</div>
     </footer>
 
-    <!-- JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Slideshow Logic
-        const slides = document.querySelectorAll(".slideshow img");
-        if (slides.length > 0) {
-          let currentSlide = 0;
-          function showSlide(index) {
-            slides.forEach((slide, i) =>
-              slide.classList.toggle("active", i === index)
-            );
-          }
-          setInterval(() => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-          }, 5000);
+   <!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- === START: REVISED AND IMPROVED SCRIPT === -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Slideshow Logic (Unchanged)
+    const slides = document.querySelectorAll(".slideshow img");
+    if (slides.length > 0) {
+      let currentSlide = 0;
+      function showSlide(index) {
+        slides.forEach((slide, i) =>
+          slide.classList.toggle("active", i === index)
+        );
+      }
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }, 5000);
+    }
+
+    // "Show More" Button Logic (Unchanged)
+    document.querySelectorAll(".show-more-btn").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const cardContent = event.target.closest(".card-content");
+        const shortText = cardContent.querySelector(".short-text");
+        const fullText = cardContent.querySelector(".full-text");
+        if (
+          fullText.style.display === "none" ||
+          fullText.style.display === ""
+        ) {
+          shortText.style.display = "none";
+          fullText.style.display = "block";
+          button.textContent = "Show Less";
+        } else {
+          shortText.style.display = "block";
+          fullText.style.display = "none";
+          button.textContent = "Show More";
+        }
+      });
+    });
+    
+    // --- START: MODIFIED AND IMPROVED SHARE LOGIC ---
+
+    // This is a reusable helper function to create the icon buttons
+    function buildShareIcons(title, url) {
+        const icons = document.createElement("div");
+        icons.className = "share-icons";
+
+        function makeIcon(html, titleAttr, onClick) {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.innerHTML = html;
+            b.title = titleAttr;
+            b.addEventListener("click", (e) => {
+                e.stopPropagation(); // Prevent card's link from firing
+                onClick();
+            });
+            return b;
         }
 
-        // "Show More" Button Logic
-        document.querySelectorAll(".show-more-btn").forEach((button) => {
-          button.addEventListener("click", (event) => {
-            const cardContent = event.target.closest(".card-content");
-            const shortText = cardContent.querySelector(".short-text");
-            const fullText = cardContent.querySelector(".full-text");
-            if (
-              fullText.style.display === "none" ||
-              fullText.style.display === ""
-            ) {
-              shortText.style.display = "none";
-              fullText.style.display = "block";
-              button.textContent = "Show Less";
-            } else {
-              shortText.style.display = "block";
-              fullText.style.display = "none";
-              button.textContent = "Show More";
-            }
-          });
+        // Facebook
+        icons.appendChild(
+            makeIcon('<i class="fab fa-facebook-f"></i>', "Share on Facebook", () => {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank", "width=600,height=400");
+            })
+        );
+        // Twitter
+        icons.appendChild(
+            makeIcon('<i class="fab fa-twitter"></i>', "Share on Twitter", () => {
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, "_blank", "width=600,height=400");
+            })
+        );
+        // WhatsApp
+        icons.appendChild(
+            makeIcon('<i class="fab fa-whatsapp"></i>', "Share on WhatsApp", () => {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(title + " " + url)}`, "_blank");
+            })
+        );
+        // Copy link
+        const copyBtn = makeIcon('<i class="fa fa-link"></i>', "Copy link", () => {
+            navigator.clipboard.writeText(url).then(() => {
+                copyBtn.innerHTML = "✓";
+                setTimeout(() => (copyBtn.innerHTML = '<i class="fa fa-link"></i>'), 1400);
+            }).catch(() => prompt("Copy this link:", url));
         });
-      });
-    </script>
+        icons.appendChild(copyBtn);
+
+        return icons;
+    }
+
+    // Loop through each event card to add share buttons
+    document.querySelectorAll(".event-card").forEach((card) => {
+        // Read the page URL directly from the data-page-url attribute
+        const pageUrlAttribute = card.dataset.pageUrl;
+
+        // If a card does NOT have the data attribute, we simply skip it.
+        if (!pageUrlAttribute) {
+            return;
+        }
+
+        // If it does have the attribute, we proceed
+        const cardContent = card.querySelector(".card-content");
+        const titleEl = cardContent.querySelector("h4");
+        const title = titleEl ? titleEl.textContent.trim() : document.title;
+        
+        // Create the full, absolute URL for sharing
+        const absoluteUrl = new URL(pageUrlAttribute, location.href).href;
+
+        const showBtn = cardContent.querySelector(".show-more-btn");
+        if (!showBtn) return;
+
+        // Build the share icons using our helper function
+        const icons = buildShareIcons(title, absoluteUrl);
+        icons.style.marginLeft = "auto"; // Push icons to the right
+
+        // Create a flex row container to hold the button and icons
+        const row = document.createElement("div");
+        row.style.display = "flex";
+        row.style.alignItems = "center";
+        row.style.width = "100%";
+
+        // Move the existing button into our new row, and add the icons
+        showBtn.parentNode.insertBefore(row, showBtn);
+        row.appendChild(showBtn);
+        row.appendChild(icons);
+    });
+
+    // --- END: MODIFIED AND IMPROVED SHARE LOGIC ---
+  });
+</script>
+<!-- === END: REVISED AND IMPROVED SCRIPT === -->
+</body>
+</html>
   </body>
 </html>

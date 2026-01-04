@@ -312,3 +312,52 @@ main {
 .event-card:nth-child(3) {
   animation-delay: 0.3s;
 }
+
+
+/* Styles/style.css */
+
+/* === Add this new CSS at the end of your file === */
+
+/* --- Event Card Footer for Buttons --- */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes button and icons apart */
+  margin-top: 15px;
+  gap: 10px;
+}
+
+/* --- Social Share Icons --- */
+.share-icons {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.share-icons button {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f0f2f5; /* A slightly softer background */
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.share-icons button i {
+  color: #0d6efd; /* Your theme's primary blue */
+  font-size: 16px;
+}
+
+.share-icons button:hover {
+  background: #e4e6eb;
+  transform: scale(1.1);
+}
+
+.share-icons button:focus {
+  outline: 2px solid rgba(13, 110, 253, 0.2);
+}
