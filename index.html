@@ -242,7 +242,7 @@
             <p class="full-text">
               The Bootcamp sought to: Foster creativity through Arts & Crafts,
               Painting, and Drawing. Build digital skills through Computer
-              Programming and Web Development. Develop musical talent and
+              Programming and Web Development. Develop musical talent andsh
               appreciation through Music Training. Provide a safe platform for
               teamwork, confidence-building, and innovation. ---
               <br />
@@ -582,13 +582,14 @@
       <div class="copyright">© 2026 DARED. All rights reserved.</div>
     </footer>
 
+
+    
    <!-- JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- === START: REVISED AND IMPROVED SCRIPT === -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // Slideshow Logic (Unchanged)
+    // Slideshow Logic
     const slides = document.querySelectorAll(".slideshow img");
     if (slides.length > 0) {
       let currentSlide = 0;
@@ -603,7 +604,7 @@
       }, 5000);
     }
 
-    // "Show More" Button Logic (Unchanged)
+    // "Show More" Button Logic 
     document.querySelectorAll(".show-more-btn").forEach((button) => {
       button.addEventListener("click", (event) => {
         const cardContent = event.target.closest(".card-content");
@@ -624,9 +625,7 @@
       });
     });
     
-    // --- START: MODIFIED AND IMPROVED SHARE LOGIC ---
-
-    // This is a reusable helper function to create the icon buttons
+ 
     function buildShareIcons(title, url) {
         const icons = document.createElement("div");
         icons.className = "share-icons";
@@ -696,7 +695,7 @@
 
         // Build the share icons using our helper function
         const icons = buildShareIcons(title, absoluteUrl);
-        icons.style.marginLeft = "auto"; // Push icons to the right
+        icons.style.marginLeft = "20%"; // Push icons to the right
 
         // Create a flex row container to hold the button and icons
         const row = document.createElement("div");
@@ -710,10 +709,10 @@
         row.appendChild(icons);
     });
 
-    // --- END: MODIFIED AND IMPROVED SHARE LOGIC ---
+   
   });
 </script>
-<!-- === END: REVISED AND IMPROVED SCRIPT === -->
+
 </body>
 </html>
   </body>

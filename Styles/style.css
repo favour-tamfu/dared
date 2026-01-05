@@ -190,15 +190,17 @@ main {
   background-color: var(--color-accent);
   color: white;
   border: none;
-  padding: 0.7rem 1.5rem;
+  padding: 0.4rem 1rem;
   cursor: pointer;
   border-radius: 8px;
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 400;
+  font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   align-self: flex-start;
+  
 }
 .show-more-btn:hover,
 .show-more-btn1:hover {
@@ -313,7 +315,6 @@ main {
   animation-delay: 0.3s;
 }
 
-
 /* Styles/style.css */
 
 /* === Add this new CSS at the end of your file === */
@@ -322,15 +323,16 @@ main {
 .card-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pushes button and icons apart */
+  justify-content: space-evenly; /* Pushes button and icons apart */
   margin-top: 15px;
-  gap: 10px;
+  gap: 5px;
+ 
 }
 
 /* --- Social Share Icons --- */
 .share-icons {
   display: inline-flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
 }
 
