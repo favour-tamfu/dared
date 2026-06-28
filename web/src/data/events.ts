@@ -23,6 +23,27 @@ export type DaredEvent = {
 // All content ported from the legacy site (legacy/Page1–8.html + index.html).
 export const events: DaredEvent[] = [
   {
+    slug: "project-management-grant-writing-workshop",
+    title: "Project Management & Grant Writing Workshop",
+    category: "Advocacy",
+    image: "/images/grant-writing-workshop.jpg",
+    excerpt:
+      "A three-day intensive training in Bamenda — funded by the French Development Agency through Alliance Française Bamenda — equipping 30 participants from 20+ organizations with project design and fundraising skills.",
+    body: [
+      "Direct Action for Rights Equity and Development (DARED) organized a three-day Project Management and Grant Writing Workshop in Bamenda, in Cameroon's North West Region. The intensive training brought together 30 participants from over 20 organizations — including artists, community-based organizations, and representatives of persons with disabilities. It was made possible with funding from the French Development Agency (AFD), through Alliance Française Bamenda.",
+      "Day one, led by Dr. Forgwie Gideon, covered the fundamentals of project design — from problem identification to setting clear, SMART objectives.",
+      "On day two, DARED's Director, Tamfu Kilem Bongwa, guided participants through the Logical Framework Approach and the essentials of budget development.",
+      "The final day focused on grant writing itself — proposal development, structuring competitive applications, and understanding donor requirements.",
+      "By the close of the workshop, participants were equipped with essential skills in project design and fundraising, strengthening organizational capacity and fostering cross-sector collaboration across the region.",
+    ],
+    gallery: [
+      "/images/grant-writing-workshop-1.jpg",
+      "/images/grant-writing-workshop-2.jpg",
+      "/images/grant-writing-workshop-3.jpg",
+    ],
+    featured: true,
+  },
+  {
     slug: "tree-planting-bafut-palace",
     title: "Tree Planting at the Bafut Royal Palace",
     category: "Environment",
