@@ -1,0 +1,22 @@
+# Editor / harness & AI-assistant config — never push
+.claude/
+CLAUDE.md
+AGENTS.md
+
+# Local reference copy of the original site (preserved on the `legacy` branch)
+legacy/
+
+# Dependencies & build output
+node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+
+# Env / secrets
+.env
+.env.*
+
+# OS / misc
+.DS_Store
+Thumbs.db
+*.log

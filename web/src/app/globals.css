@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/*
+  DARED — "Toghu" design system
+  Rooted in Atoghu/Toghu, the embroidered regalia of the Northwest
+  Grassfields: deep velvet cloth with red, gold, green & white thread.
+
+  Velvet is the foundation; the embroidery colors are accents only.
+  Tokens below become Tailwind utilities, e.g. `bg-velvet-900`,
+  `text-crimson-500`, `text-gold-300`, `font-display`.
+*/
+@theme {
+  /* The cloth — deep royal navy/indigo velvet (primary, serious) */
+  --color-velvet-50: #eef0f8;
+  --color-velvet-100: #d6dbef;
+  --color-velvet-200: #aab3da;
+  --color-velvet-300: #7886c0;
+  --color-velvet-400: #4f5fa0;
+  --color-velvet-500: #344680;
+  --color-velvet-600: #243363;
+  --color-velvet-700: #1a2650;
+  --color-velvet-800: #121b3c;
+  --color-velvet-900: #0b1228;
+
+  /* Thread — deep traditional Toghu red (CTA / accent) */
+  --color-crimson-50: #fbece9;
+  --color-crimson-100: #f5cdc7;
+  --color-crimson-200: #e89c92;
+  --color-crimson-300: #db6d60;
+  --color-crimson-400: #cd4537;
+  --color-crimson-500: #b5302e;
+  --color-crimson-600: #9a2826;
+  --color-crimson-700: #7b201f;
+  --color-crimson-800: #5d1918;
+  --color-crimson-900: #451312;
+
+  /* Thread — gold / ochre (heritage, highlights) */
+  --color-gold-50: #fbf3df;
+  --color-gold-100: #f6e6b6;
+  --color-gold-200: #eed07d;
+  --color-gold-300: #e6ba49;
+  --color-gold-400: #d8a12a;
+  --color-gold-500: #b5831f;
+  --color-gold-600: #8f6618;
+
+  /* Thread — green / leaf (environment accent) */
+  --color-leaf-50: #ecf6ef;
+  --color-leaf-100: #cee7d6;
+  --color-leaf-200: #9fcfae;
+  --color-leaf-300: #66b083;
+  --color-leaf-400: #36905c;
+  --color-leaf-500: #1f7a4a;
+  --color-leaf-600: #156440;
+  --color-leaf-700: #114e31;
+
+  /* Cloth ground — warm parchment / cream canvas + surfaces */
+  --color-sand-50: #f6f1e7;
+  --color-sand-100: #efe7d6;
+  --color-sand-200: #e7dcc6;
+  --color-sand-300: #d8caac;
+
+  --color-cream: #f6f1e7;
+  --color-ink: #16182a;
+  --color-ink-soft: #4c4e60;
+
+  /* Type — set from next/font CSS variables (see layout.tsx) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-300);
+    color: var(--color-velvet-900);
+  }
+}
+
+/* Slow, continuous "embroidered hem" — dynamic but never distracting */
+@keyframes toghu-pan {
+  to {
+    background-position: 64px 0;
+  }
+}
+
+@keyframes toghu-drift {
+  to {
+    transform: translate3d(-80px, -80px, 0);
+  }
+}
+
+/* Gentle, water-like "flow" for the body motif patches on inner pages */
+@keyframes toghu-flow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(16px, -18px, 0) rotate(5deg);
+  }
+  66% {
+    transform: translate3d(-10px, -8px, 0) rotate(-4deg);
+  }
+}
+
+@keyframes toghu-flow-2 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-22px, 14px, 0) rotate(-6deg);
+  }
+}
+
+@keyframes toghu-flow-3 {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  40% {
+    transform: translate3d(12px, 18px, 0) rotate(4deg);
+  }
+  75% {
+    transform: translate3d(20px, -6px, 0) rotate(8deg);
+  }
+}
+
+/* Dense, contained motif field on inner pages — fluid, wandering (water-like)
+   drift. Start/end differ by exactly one tile (80px) so it loops seamlessly. */
+@keyframes toghu-field {
+  0% {
+    background-position: 0px 0px;
+  }
+  20% {
+    background-position: 34px -22px;
+  }
+  40% {
+    background-position: 14px -52px;
+  }
+  60% {
+    background-position: -26px -40px;
+  }
+  80% {
+    background-position: -16px -68px;
+  }
+  100% {
+    background-position: 0px -80px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-toghu-pan,
+  .animate-toghu-drift,
+  .toghu-patch,
+  .toghu-field {
+    animation: none !important;
+  }
+}
