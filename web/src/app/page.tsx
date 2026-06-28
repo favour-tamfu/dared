@@ -33,7 +33,7 @@ export default function Home() {
     <>
       <Hero />
 
-      {/* Impact stats — on velvet, with a faint motif */}
+      {/* Impact stats, on velvet, with a faint motif */}
       <section className="relative overflow-hidden bg-velvet-800">
         <ToghuWatermark id="stats-toghu" className="text-velvet-300" opacity={0.08} />
         <Container className="relative grid grid-cols-2 gap-8 py-14 lg:grid-cols-4">
@@ -130,7 +130,7 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* CTA — crimson thread band with motif */}
+      {/* CTA, crimson thread band with motif */}
       <section className="relative overflow-hidden bg-crimson-600 py-16 sm:py-24">
         <ToghuWatermark id="cta-toghu" className="text-gold-200" opacity={0.12} />
         <Container className="relative text-center">

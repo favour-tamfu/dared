@@ -1,7 +1,7 @@
 /*
   Toghu-inspired motifs. These are original geometric interpretations of the
   Atoghu/Toghu embroidery language (sun medallions, spiders, diamond lattices)
-  — used as subtle texture and dividers, never as the focus.
+, used as subtle texture and dividers, never as the focus.
 */
 
 const diamond = (cx: number, cy: number, r: number) =>
@@ -69,7 +69,7 @@ export function ToghuWatermark({
               <path d={diamond(160, 0, 16)} />
               <path d={diamond(0, 160, 16)} />
               <path d={diamond(160, 160, 16)} />
-              {/* edge-midpoint diamonds — form the lattice */}
+              {/* edge-midpoint diamonds, form the lattice */}
               <path d={diamond(80, 0, 10)} />
               <path d={diamond(0, 80, 10)} />
               <path d={diamond(160, 80, 10)} />
@@ -107,7 +107,7 @@ const trimTile = `<svg xmlns='http://www.w3.org/2000/svg' width='64' height='28'
 </svg>`.replace(/\n/g, "");
 
 /**
- * A thin "embroidered hem" band — used as a divider and at the edges of
+ * A thin "embroidered hem" band, used as a divider and at the edges of
  * velvet sections, echoing the trim on a Toghu gown.
  */
 export function ToghuTrim({ className = "", animated = false }: TrimProps) {

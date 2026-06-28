@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
   A dense, small, tightly-tiled Toghu motif "field" (sun medallions + diamonds,
   matching the footer watermark but smaller and closer together). It is meant to
   sit inside a `relative overflow-hidden` body container so it stays CONTAINED
-  between the top and bottom hems — it can't escape that box on scroll.
+  between the top and bottom hems, it can't escape that box on scroll.
 
   Motion: a calm continuous drift (CSS `background-position`) plus an eased,
   water-like response to scrolling (a lerped `transform`).

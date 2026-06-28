@@ -119,11 +119,45 @@ export default async function EventDetailPage({
           <article className="py-14 sm:py-20">
             <Container>
               <div className="mx-auto max-w-3xl">
-                <div className="space-y-5 text-lg leading-relaxed text-ink-soft">
-                  {event.body.map((para, i) => (
-                    <p key={i}>{para}</p>
-                  ))}
-                </div>
+                {event.sections ? (
+                  <div className="space-y-8">
+                    {event.sections.map((section, i) => (
+                      <section key={i}>
+                        {section.heading && (
+                          <h2 className="font-display text-2xl font-semibold text-ink">
+                            {section.heading}
+                          </h2>
+                        )}
+                        {section.paragraphs?.map((para, j) => (
+                          <p
+                            key={j}
+                            className="mt-3 text-lg leading-relaxed text-ink-soft"
+                          >
+                            {para}
+                          </p>
+                        ))}
+                        {section.bullets && (
+                          <ul className="mt-4 space-y-2.5">
+                            {section.bullets.map((b, j) => (
+                              <li key={j} className="flex gap-3">
+                                <span className="mt-2.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-crimson-500" />
+                                <span className="text-lg leading-relaxed text-ink-soft">
+                                  {b}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </section>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-5 text-lg leading-relaxed text-ink-soft">
+                    {event.body?.map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </div>
+                )}
 
                 <div className="mt-8 border-t border-sand-300 pt-6">
                   <ShareButtons title={event.title} />

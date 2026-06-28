@@ -7,7 +7,7 @@ import { Container } from "@/components/ui/Container";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about DARED — Direct Action for Rights Equity and Development — a Cameroonian non-profit for heritage, environment, and youth empowerment.",
+    "Learn about DARED, Direct Action for Rights Equity and Development, a Cameroonian non-profit for heritage, environment, and youth empowerment.",
   alternates: { canonical: "/about/" },
 };
 
@@ -53,7 +53,7 @@ export default function AboutPage() {
               <p className="mt-4 text-lg leading-relaxed text-ink-soft">
                 Our work spans cultural heritage preservation, environmental
                 restoration, youth and children empowerment, and the creative
-                arts — often in partnership with UNESCO programs, regional
+                arts, often in partnership with UNESCO programs, regional
                 delegations, and local councils.
               </p>
             </div>

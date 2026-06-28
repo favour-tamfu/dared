@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
-  DARED — "Toghu" design system
+  DARED, "Toghu" design system
   Rooted in Atoghu/Toghu, the embroidered regalia of the Northwest
   Grassfields: deep velvet cloth with red, gold, green & white thread.
 
@@ -10,7 +10,7 @@
   `text-crimson-500`, `text-gold-300`, `font-display`.
 */
 @theme {
-  /* The cloth — deep royal navy/indigo velvet (primary, serious) */
+  /* The cloth, deep royal navy/indigo velvet (primary, serious) */
   --color-velvet-50: #eef0f8;
   --color-velvet-100: #d6dbef;
   --color-velvet-200: #aab3da;
@@ -22,7 +22,7 @@
   --color-velvet-800: #121b3c;
   --color-velvet-900: #0b1228;
 
-  /* Thread — deep traditional Toghu red (CTA / accent) */
+  /* Thread, deep traditional Toghu red (CTA / accent) */
   --color-crimson-50: #fbece9;
   --color-crimson-100: #f5cdc7;
   --color-crimson-200: #e89c92;
@@ -34,7 +34,7 @@
   --color-crimson-800: #5d1918;
   --color-crimson-900: #451312;
 
-  /* Thread — gold / ochre (heritage, highlights) */
+  /* Thread, gold / ochre (heritage, highlights) */
   --color-gold-50: #fbf3df;
   --color-gold-100: #f6e6b6;
   --color-gold-200: #eed07d;
@@ -43,7 +43,7 @@
   --color-gold-500: #b5831f;
   --color-gold-600: #8f6618;
 
-  /* Thread — green / leaf (environment accent) */
+  /* Thread, green / leaf (environment accent) */
   --color-leaf-50: #ecf6ef;
   --color-leaf-100: #cee7d6;
   --color-leaf-200: #9fcfae;
@@ -53,7 +53,7 @@
   --color-leaf-600: #156440;
   --color-leaf-700: #114e31;
 
-  /* Cloth ground — warm parchment / cream canvas + surfaces */
+  /* Cloth ground, warm parchment / cream canvas + surfaces */
   --color-sand-50: #f6f1e7;
   --color-sand-100: #efe7d6;
   --color-sand-200: #e7dcc6;
@@ -63,7 +63,7 @@
   --color-ink: #16182a;
   --color-ink-soft: #4c4e60;
 
-  /* Type — set from next/font CSS variables (see layout.tsx) */
+  /* Type, set from next/font CSS variables (see layout.tsx) */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 }
@@ -97,7 +97,7 @@
   }
 }
 
-/* Slow, continuous "embroidered hem" — dynamic but never distracting */
+/* Slow, continuous "embroidered hem", dynamic but never distracting */
 @keyframes toghu-pan {
   to {
     background-position: 64px 0;
@@ -147,7 +147,7 @@
   }
 }
 
-/* Dense, contained motif field on inner pages — fluid, wandering (water-like)
+/* Dense, contained motif field on inner pages, fluid, wandering (water-like)
    drift. Start/end differ by exactly one tile (80px) so it loops seamlessly. */
 @keyframes toghu-field {
   0% {

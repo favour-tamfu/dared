@@ -36,7 +36,7 @@ export default function GalleryPage() {
       <PageHeader
         eyebrow="Moments"
         title="Gallery"
-        subtitle="A glimpse into our events, partnerships, and the communities we serve — grouped by event."
+        subtitle="A glimpse into our events, partnerships, and the communities we serve, grouped by event."
       />
 
       <div className="space-y-16 py-16 sm:py-20">

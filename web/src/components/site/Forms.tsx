@@ -46,7 +46,7 @@ export function NewsletterForm() {
   if (status === "success") {
     return (
       <p className="mt-4 rounded-xl bg-velvet-800 px-4 py-3 text-sm text-gold-200">
-        Thanks for subscribing — you&apos;re on the list!
+        Thanks for subscribing, you&apos;re on the list!
       </p>
     );
   }
@@ -71,7 +71,7 @@ export function NewsletterForm() {
       </form>
       {status === "error" && (
         <p className="mt-2 text-xs text-crimson-300">
-          Something went wrong — please try again.
+          Something went wrong, please try again.
         </p>
       )}
     </div>

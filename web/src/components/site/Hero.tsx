@@ -70,7 +70,7 @@ export function Hero() {
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-velvet-100">
             Direct Action for Rights Equity and Development drives cultural
             preservation, environmental restoration, and youth empowerment across
-            Cameroon — through hands-on action and meaningful partnerships.
+            Cameroon, through hands-on action and meaningful partnerships.
           </p>
           <div className="mt-9 flex flex-wrap gap-4">
             <Button href="/get-involved" size="lg">

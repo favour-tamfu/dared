@@ -9,14 +9,14 @@ import { siteConfig } from "@/lib/nav";
 export const metadata: Metadata = {
   title: "Get Involved",
   description:
-    "Volunteer with DARED or support our work with a donation — help protect heritage, restore the environment, and empower communities across Cameroon.",
+    "Volunteer with DARED or support our work with a donation, help protect heritage, restore the environment, and empower communities across Cameroon.",
   alternates: { canonical: "/get-involved/" },
 };
 
 const ways = [
   {
     title: "Volunteer",
-    body: "Join our events and initiatives on the ground — from tree planting to youth bootcamps.",
+    body: "Join our events and initiatives on the ground, from tree planting to youth bootcamps.",
   },
   {
     title: "Partner",

@@ -21,7 +21,7 @@ export default function EventsPage() {
       <PageHeader
         eyebrow="Our work"
         title="Events & Initiatives"
-        subtitle="From tree planting and heritage engagement to youth bootcamps and advocacy — a look at the work we do across Cameroon and beyond."
+        subtitle="From tree planting and heritage engagement to youth bootcamps and advocacy, a look at the work we do across Cameroon and beyond."
       />
       <section className="py-14 sm:py-20">
         <Container>

@@ -5,6 +5,13 @@ export type EventCategory =
   | "Arts"
   | "Advocacy";
 
+/** A structured content block for longer write-ups (heading + text + bullets). */
+export type EventSection = {
+  heading?: string;
+  paragraphs?: string[];
+  bullets?: string[];
+};
+
 export type DaredEvent = {
   slug: string;
   title: string;
@@ -13,27 +20,88 @@ export type DaredEvent = {
   image: string;
   /** Short summary shown on the card */
   excerpt: string;
-  /** Full article, one string per paragraph (ported from the legacy site) */
-  body: string[];
+  /** Full article as plain paragraphs (simple events) */
+  body?: string[];
+  /** Structured article (headings + bullets) for longer write-ups */
+  sections?: EventSection[];
   /** Additional photos for this event */
   gallery: string[];
   featured?: boolean;
 };
 
-// All content ported from the legacy site (legacy/Page1–8.html + index.html).
+// All content ported from the legacy site (legacy/Page1-8.html + index.html).
 export const events: DaredEvent[] = [
+  {
+    slug: "football-for-social-cohesion",
+    title: "Football for Social Cohesion and Community Development",
+    category: "Advocacy",
+    image: "/images/football-social-cohesion.jpg",
+    excerpt:
+      "A year-one report on our Football for Social Cohesion and Community Development Project in Bamenda, which reached 865 participants (54% women and girls) and engaged over 1,000 youths in clean-up campaigns to build peace between communities.",
+    sections: [
+      {
+        paragraphs: [
+          "In partnership with Development for Humanity (DEH), DARED completed the first year of the Football for Social Cohesion and Community Development Project in Bamenda, in Cameroon's North West Region. The project uses sport and community service to strengthen peaceful coexistence in a region affected by conflict.",
+        ],
+      },
+      {
+        heading: "About the project",
+        paragraphs: [
+          "The project set out to strengthen social cohesion between the Grassfield majority and Fulani minority communities, promote environmental responsibility, and foster the inclusion of women and persons with disabilities in community life.",
+        ],
+      },
+      {
+        heading: "Year-one results",
+        bullets: [
+          "865 direct participants engaged in football, peacebuilding, and community activities.",
+          "54% female participation across women and girls.",
+          "Over 1,000 youths mobilised for community clean-up campaigns.",
+          "Inclusion of male participants living with disabilities.",
+        ],
+      },
+      {
+        heading: "Activities",
+        bullets: [
+          "Male and female football matches.",
+          "Peace-building engagements between communities.",
+          "Community service and environmental sanitation across streets, markets, and public spaces.",
+        ],
+      },
+      {
+        heading: "Challenges and learning",
+        paragraphs: [
+          "Despite targeted outreach, the team was unable to identify eligible female amputee participants this year. Deepening the inclusion of persons with disabilities remains a priority for the next phase of the project.",
+        ],
+      },
+      {
+        paragraphs: [
+          "Together, these efforts contributed to greater social cohesion, a cleaner environment, and stronger inclusion, advancing peaceful coexistence across the region.",
+        ],
+      },
+    ],
+    gallery: [
+      "/images/football-social-cohesion-1.jpg",
+      "/images/football-social-cohesion-2.jpg",
+      "/images/football-social-cohesion-3.jpg",
+      "/images/football-social-cohesion-4.jpg",
+      "/images/football-social-cohesion-5.jpg",
+      "/images/football-social-cohesion-6.jpg",
+      "/images/football-social-cohesion-7.jpg",
+    ],
+    featured: true,
+  },
   {
     slug: "project-management-grant-writing-workshop",
     title: "Project Management & Grant Writing Workshop",
     category: "Advocacy",
     image: "/images/grant-writing-workshop.jpg",
     excerpt:
-      "A three-day intensive training in Bamenda — funded by the French Development Agency through Alliance Française Bamenda — equipping 30 participants from 20+ organizations with project design and fundraising skills.",
+      "A three-day intensive training in Bamenda, funded by the French Development Agency through Alliance Française Bamenda, equipping 30 participants from 20+ organizations with project design and fundraising skills.",
     body: [
-      "Direct Action for Rights Equity and Development (DARED) organized a three-day Project Management and Grant Writing Workshop in Bamenda, in Cameroon's North West Region. The intensive training brought together 30 participants from over 20 organizations — including artists, community-based organizations, and representatives of persons with disabilities. It was made possible with funding from the French Development Agency (AFD), through Alliance Française Bamenda.",
-      "Day one, led by Dr. Forgwie Gideon, covered the fundamentals of project design — from problem identification to setting clear, SMART objectives.",
+      "Direct Action for Rights Equity and Development (DARED) organized a three-day Project Management and Grant Writing Workshop in Bamenda, in Cameroon's North West Region. The intensive training brought together 30 participants from over 20 organizations, including artists, community-based organizations, and representatives of persons with disabilities. It was made possible with funding from the French Development Agency (AFD), through Alliance Française Bamenda.",
+      "Day one, led by Dr. Forgwie Gideon, covered the fundamentals of project design, from problem identification to setting clear, SMART objectives.",
       "On day two, DARED's Director, Tamfu Kilem Bongwa, guided participants through the Logical Framework Approach and the essentials of budget development.",
-      "The final day focused on grant writing itself — proposal development, structuring competitive applications, and understanding donor requirements.",
+      "The final day focused on grant writing itself, proposal development, structuring competitive applications, and understanding donor requirements.",
       "By the close of the workshop, participants were equipped with essential skills in project design and fundraising, strengthening organizational capacity and fostering cross-sector collaboration across the region.",
     ],
     gallery: [
@@ -53,7 +121,7 @@ export const events: DaredEvent[] = [
     body: [
       "In a significant move to safeguard both natural and cultural heritage, Direct Action for Rights Equity and Development (DARED) led a large-scale tree-planting initiative at the historic Bafut Royal Palace. This vital project was made possible with funding support from the North West Regional Assembly and through a collaborative partnership with the Bafut Council and the UNESCO Heritage Volunteer Program 2025.",
       "The core objective of the activity was to restore the ecological balance of the palace environment by planting a total of 500 palm trees across the grounds. This effort directly addresses the urgent challenge of deforestation, which threatens the region's biodiversity, degrades soil quality, and erodes the traditional landscapes that are integral to the palace's identity.",
-      "Beyond its environmental impact, the initiative is deeply rooted in promoting economic and cultural sustainability. The planting of palm trees aims to revitalize the long-standing practice of palm wine tapping — a culturally significant and economically valuable activity for Bafut communities. By investing in these trees, the project supports future livelihoods while preserving an essential part of local tradition and identity.",
+      "Beyond its environmental impact, the initiative is deeply rooted in promoting economic and cultural sustainability. The planting of palm trees aims to revitalize the long-standing practice of palm wine tapping, a culturally significant and economically valuable activity for Bafut communities. By investing in these trees, the project supports future livelihoods while preserving an essential part of local tradition and identity.",
       "This powerful collaboration between community institutions, government bodies, and cultural heritage partners marks an important step forward. It demonstrates a shared commitment to protecting the Bafut Kingdom's invaluable assets for generations to come, ensuring that both the natural environment and cherished traditions can continue to thrive.",
     ],
     gallery: [
@@ -93,7 +161,7 @@ export const events: DaredEvent[] = [
     category: "Heritage",
     image: "/images/bafut-palace-visit.jpg",
     excerpt:
-      "A meeting with local producers of the Atogho at the Bafut Palace — a UNESCO Tentative List heritage site — to discuss boosting the region's embroidery and creative sector.",
+      "A meeting with local producers of the Atogho at the Bafut Palace, a UNESCO Tentative List heritage site, to discuss boosting the region's embroidery and creative sector.",
     body: [
       "A visit to the Bafut Palace, one of only two sites within the Northwest Region on UNESCO's Tentative List of World Heritage Sites. A meeting was held with local producers of the Atogho, a significant part of the fashion and design heritage of the region.",
       "In this meeting, chaired by the Fon of Bafut, we talked about ways to boost the embroidery sector through support of local fashion designers, the setting up of SMEs, and creating linkages to leverage investment within the creative and cultural sectors. We also discussed alternative markets for local artisans who have been greatly affected by the ongoing crisis, which has disrupted tourism in Bafut Village.",
@@ -113,12 +181,12 @@ export const events: DaredEvent[] = [
     category: "Youth",
     image: "/images/childrens-bootcamp.jpg",
     excerpt:
-      "A hands-on bootcamp for 50 children in arts & crafts, painting, computer programming, web development, and music — building creativity, digital skills, and confidence.",
+      "A hands-on bootcamp for 50 children in arts & crafts, painting, computer programming, web development, and music, building creativity, digital skills, and confidence.",
     body: [
       "The Bootcamp sought to foster creativity through Arts & Crafts, Painting, and Drawing; build digital skills through Computer Programming and Web Development; develop musical talent and appreciation through Music Training; and provide a safe platform for teamwork, confidence-building, and innovation.",
       "Participants took part in engaging, hands-on workshops across five main areas: Arts & Crafts (design thinking, creativity, and problem-solving); Painting & Drawing (sketching, coloring, and shading); Computer Programming (basic coding concepts, logical thinking, and digital literacy); Web Development (building simple web pages and content creation); and Music Training (basic music theory, rhythm, and vocal training).",
       "Beyond technical abilities, participants strengthened soft skills such as teamwork and collaboration, public speaking and presentation, and confidence and self-discipline.",
-      "The Bootcamp brought together 50 children and teens, who participated enthusiastically and produced impressive results across the various sessions. It concluded with a memorable closing ceremony — bringing together parents, facilitators, and stakeholders — where Certificates of Participation were awarded to all 50 children, alongside exhibitions of artworks, tech projects, and musical presentations.",
+      "The Bootcamp brought together 50 children and teens, who participated enthusiastically and produced impressive results across the various sessions. It concluded with a memorable closing ceremony, bringing together parents, facilitators, and stakeholders, where Certificates of Participation were awarded to all 50 children, alongside exhibitions of artworks, tech projects, and musical presentations.",
     ],
     gallery: [
       "/images/childrens-bootcamp-1.jpg",
@@ -165,9 +233,9 @@ export const events: DaredEvent[] = [
     category: "Heritage",
     image: "/images/world-heritage-day.jpg",
     excerpt:
-      "A day of commemorative activities including a CRTV radio engagement and guided tours of heritage sites — the German fort and Menteh Waterfall — with University of Bamenda students.",
+      "A day of commemorative activities including a CRTV radio engagement and guided tours of heritage sites, the German fort and Menteh Waterfall, with University of Bamenda students.",
     body: [
-      "An amazing experience on the first day of community activities for the celebration of the International Day for Monuments and Sites. Commemorative activities began at 9:00 a.m. with a visit to the CRTV radio regional station for the program “Yours and Mine.” On this program, we spoke about the historical significance of World Heritage Day — its history and conception — and the cultural significance of this day within our local context. We highlighted the heritage sites within the Northwest Region of Cameroon and the importance of protecting them.",
+      "An amazing experience on the first day of community activities for the celebration of the International Day for Monuments and Sites. Commemorative activities began at 9:00 a.m. with a visit to the CRTV radio regional station for the program “Yours and Mine.” On this program, we spoke about the historical significance of World Heritage Day, its history and conception, and the cultural significance of this day within our local context. We highlighted the heritage sites within the Northwest Region of Cameroon and the importance of protecting them.",
       "Next on our program was a visit to a series of heritage sites within the region with students from the University of Bamenda's Faculty of History and Archaeology. We started at the German fort, where we showed students buildings over 112 years old, as well as the graveyard on the fort where German and British soldiers were buried in Cameroon. Next was a visit to Menteh village, which holds one of the most prestigious heritage sites in the region: the Menteh Waterfall.",
       "Upon arrival at the village, we were taken to the house of the sub-chief, also known as “MOOH.” He welcomed the entourage, giving a brief history about the village, its festivals, and historical practices. In a question-and-answer session, students learned about the cultural significance of the Menteh waterfall and practices tied to local values, such as the annual festivals where water is carried from the falls to the Fon of the village for the year. The visit concluded at the site itself, led by the MOOH and some elders of Menteh village.",
     ],
@@ -185,11 +253,11 @@ export const events: DaredEvent[] = [
     category: "Heritage",
     image: "/images/world-heritage-volunteers.jpg",
     excerpt:
-      "Partnering with the Regional Delegation of Arts and Culture for the UNESCO World Heritage Volunteer Fund project at the Bafut Royal Palace — using volunteerism as a tool for heritage restoration.",
+      "Partnering with the Regional Delegation of Arts and Culture for the UNESCO World Heritage Volunteer Fund project at the Bafut Royal Palace, using volunteerism as a tool for heritage restoration.",
     body: [
       "With the world becoming a global village, a cultural battle ensues as each culture tries to influence and dominate others. It is therefore our duty to preserve our culture, cultural heritage, and identity for this generation and the next.",
       "It is with great pride that Direct Action for Rights Equity and Development (DARED) is partnering with the Regional Delegation of Arts and Culture North West Region for the implementation of the UNESCO World Heritage Volunteer Fund project under the regional service of cultural heritage. This project, carried out at the Bafut Royal Palace, aims at using volunteerism as a tool for heritage restoration and preservation.",
-      "The project, which involves both awareness-raising and hands-on activities, also seeks to create a sense of inclusion and participation for the young volunteers. Through partnerships with key stakeholders, we are working to restore this key heritage — the Bafut Royal Palace, a site on UNESCO's tentative list of world heritage sites. We are also proud that our very own director, Tamfu Kilem, serves as the program coordinator for this project.",
+      "The project, which involves both awareness-raising and hands-on activities, also seeks to create a sense of inclusion and participation for the young volunteers. Through partnerships with key stakeholders, we are working to restore this key heritage, the Bafut Royal Palace, a site on UNESCO's tentative list of world heritage sites. We are also proud that our very own director, Tamfu Kilem, serves as the program coordinator for this project.",
     ],
     gallery: ["/images/world-heritage-volunteers-1.jpg", "/images/heritage-volunteers.jpg", "/images/world-heritage-volunteers-2.jpg", "/images/world-heritage-event.jpg"],
   },
@@ -199,7 +267,7 @@ export const events: DaredEvent[] = [
     category: "Youth",
     image: "/images/youth-empowerment.jpg",
     excerpt:
-      "Hands-on training in digital literacy, entrepreneurship, financial management, and leadership — bridging the gap between education and employment for young people.",
+      "Hands-on training in digital literacy, entrepreneurship, financial management, and leadership, bridging the gap between education and employment for young people.",
     body: [
       "Skill development, especially amongst youths, is an integral part of building a more resilient future and one of the most sustainable ways of building local economies.",
       "At DARED, we believe that empowering the next generation with practical, in-demand skills is crucial. This workshop was designed to bridge the gap between education and employment, providing young attendees with hands-on training in areas such as digital literacy, entrepreneurship, financial management, and leadership.",
@@ -224,15 +292,15 @@ export const events: DaredEvent[] = [
   },
   {
     slug: "ivy-africa-madex-workshop",
-    title: "I.V.Y Africa — MadEx Workshop (Madagascar)",
+    title: "I.V.Y Africa MadEx Workshop (Madagascar)",
     category: "Heritage",
     image: "/images/madex-madagascar.jpg",
     excerpt:
       "DARED joined youth leaders from 15+ countries in Antananarivo to tackle heritage preservation and climate action through volunteering, hosted by the Malagasy National Commission for UNESCO.",
     body: [
-      "DARED had the incredible opportunity to participate in the I.V.Y. Africa – MadEx workshop in Antananarivo, Madagascar, hosted by the Malagasy National Commission for UNESCO (COMMAT). This transformative event brought together youth leaders and organizations from across Africa and beyond — including delegates from China, Thailand, Germany, and Romania — to tackle heritage preservation and climate action through volunteering.",
+      "DARED had the incredible opportunity to participate in the I.V.Y. Africa MadEx workshop in Antananarivo, Madagascar, hosted by the Malagasy National Commission for UNESCO (COMMAT). This transformative event brought together youth leaders and organizations from across Africa and beyond, including delegates from China, Thailand, Germany, and Romania, to tackle heritage preservation and climate action through volunteering.",
       "Key takeaways included exploring the intersection of climate change and heritage conservation, and learning how to design impactful volunteer projects. Participants engaged in participatory action research at the stunning Royal Hill of Ambohimanga, a UNESCO World Heritage site, discussing challenges with local communities and authorities, and gained tools for strategic planning, fundraising, and advocacy to amplify youth-led initiatives.",
-      "The workshop was also an unforgettable networking experience — connecting with inspiring changemakers from 15+ African countries and beyond to share experiences and co-create a Road Map for regional and global youth exchanges. The energy and ideas exchanged were truly empowering.",
+      "The workshop was also an unforgettable networking experience, connecting with inspiring changemakers from 15+ African countries and beyond to share experiences and co-create a Road Map for regional and global youth exchanges. The energy and ideas exchanged were truly empowering.",
     ],
     gallery: [
       "/images/madex-madagascar-1.jpg",
@@ -247,7 +315,7 @@ export const events: DaredEvent[] = [
     category: "Heritage",
     image: "/images/master-class.jpg",
     excerpt:
-      "A master conference with cultural experts on heritage conservation, protecting heritage in crisis zones, and the effects of climate change — engaging students from the University of Bamenda.",
+      "A master conference with cultural experts on heritage conservation, protecting heritage in crisis zones, and the effects of climate change, engaging students from the University of Bamenda.",
     body: [
       "A Master Conference to mark the end of activities celebrating World Heritage Day and the International Day for Sites and Monuments. It was an amazing experience drawing from a cream of expert cultural stakeholders on topics such as heritage conservation, protecting heritage in crisis zones, and the effects of climate change on heritage and heritage sites.",
       "Our Director, Tamfu Kilem, spoke on the UNESCO heritage list and sites in Cameroon. The conference engaged stakeholders and students from the University of Bamenda.",
@@ -263,7 +331,7 @@ export const events: DaredEvent[] = [
       "A roundtable conference inspiring students to revive the reading culture, organized with the Regional Delegation of Arts and Culture and partners across Bamenda.",
     body: [
       "The reading culture continues to dwindle due to the rapid advancement of other technologies, with more young people seeing reading as a requirement for passing exams and obsolete thereafter. As Mr Ngam, an English teacher at Progressive Comprehensive College, Bamenda, put it: “the reading culture is dead and we are looking for a befitting burial site for the burial.”",
-      "In response, a consortium — Direct Action for Rights Equity and Development, the Regional Delegation of Arts and Culture, and Alliance Franco — organized a roundtable conference aimed at inspiring students to keep up the reading culture. A diverse panel shared key advantages of reading: it is a means of relaxation, builds self-confidence, teaches you about different cultures, builds your language power, and increases your analytical and logical reasoning.",
+      "In response, a consortium, Direct Action for Rights Equity and Development, the Regional Delegation of Arts and Culture, and Alliance Franco, organized a roundtable conference aimed at inspiring students to keep up the reading culture. A diverse panel shared key advantages of reading: it is a means of relaxation, builds self-confidence, teaches you about different cultures, builds your language power, and increases your analytical and logical reasoning.",
       "The event was attended by young writers, students, and librarians from within Bamenda. As part of the commemorative activities, our Director Tamfu Kilem, alongside Madam Maurine Munoh (Service Head for Books and Reading at the Regional Delegation of Arts and Culture, North West Region), visited the Bamenda Regional Library to assess its state.",
     ],
     gallery: ["/images/library-reading.jpg"],
@@ -277,7 +345,7 @@ export const events: DaredEvent[] = [
       "Capacity-building roundtables with craftsmen and women in the North West Region to support import substitution, strengthen local economies, and grow the creative sector.",
     body: [
       "Engaging craftsmen and women in the Northwest Region as a tool for capacity building, through roundtable discussions to identify key areas for intervention and support to the creative and cultural sectors.",
-      "As a means of supporting import substitution — part of government efforts to build local economies — the initiative engaged SMEs, CIGs, and cooperative societies to partner, network, and collaborate, building lasting partnerships that can help grow the sector, increase ROI, and drive local development.",
+      "As a means of supporting import substitution, part of government efforts to build local economies, the initiative engaged SMEs, CIGs, and cooperative societies to partner, network, and collaborate, building lasting partnerships that can help grow the sector, increase ROI, and drive local development.",
     ],
     gallery: ["/images/engaging-craftsmen-1.jpg"],
   },

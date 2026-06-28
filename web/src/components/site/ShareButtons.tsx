@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 /*
-  Social share buttons (Facebook, X/Twitter, WhatsApp, copy link) — ported from
+  Social share buttons (Facebook, X/Twitter, WhatsApp, copy link), ported from
   the legacy site, restyled to the Toghu palette. Shares the current page URL
   with the event title.
 */

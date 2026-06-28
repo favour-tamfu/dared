@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "DARED — Direct Action for Rights Equity and Development",
+        alt: "DARED, Direct Action for Rights Equity and Development",
       },
     ],
   },
