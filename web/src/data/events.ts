@@ -32,6 +32,53 @@ export type DaredEvent = {
 // All content ported from the legacy site (legacy/Page1-8.html + index.html).
 export const events: DaredEvent[] = [
   {
+    slug: "undp-field-visit",
+    title: "UNDP Field Visit & Recovery Project Review",
+    category: "Advocacy",
+    image: "/images/undp-field-visit.jpg",
+    excerpt:
+      "DARED joined the UNDP Resident Representative on a field visit to the Northwest Region to review recovery-project impact, including a 2% rise in agricultural production, new market sheds in Bafmen, and a youth football programme for peace and social cohesion.",
+    sections: [
+      {
+        paragraphs: [
+          "DARED's Director joined the UNDP Resident Representative, Mr. Mathues, on a field visit and consultation meeting in Cameroon's North West Region to assess the impact of an ongoing recovery project. The mission brought together the Regional Delegate for Agriculture, the Mayor of Zhoa Council, representatives of Bamenda I Council, and partners from government institutions, local councils, and civil society organizations.",
+        ],
+      },
+      {
+        heading: "Project impact so far",
+        bullets: [
+          "A 2% increase in agricultural production across the North West Region through input distribution.",
+          "16 market sheds completed in Bafmen, out of 37 requested.",
+          "A Football Holiday Programme promoting youth peace and social cohesion.",
+        ],
+      },
+      {
+        heading: "Looking ahead",
+        paragraphs: [
+          "During the visit, UNDP introduced its 2027 to 2031 strategic priorities, centred on human capital development, economic resilience, and peacebuilding.",
+        ],
+      },
+      {
+        heading: "Strategic focus areas",
+        bullets: [
+          "Human capital and social cohesion.",
+          "Economic resilience and private sector development (blue and green economy).",
+          "Climate action and gender equality.",
+        ],
+      },
+      {
+        paragraphs: [
+          "The consultation strengthened collaboration between DARED, government bodies, local councils, and civil society toward inclusive recovery and lasting peace in the region.",
+        ],
+      },
+    ],
+    gallery: [
+      "/images/undp-field-visit-1.jpg",
+      "/images/undp-field-visit-2.jpg",
+    ],
+    featured: true,
+  },
+  {
     slug: "football-for-social-cohesion",
     title: "Football for Social Cohesion and Community Development",
     category: "Advocacy",
