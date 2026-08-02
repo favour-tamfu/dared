@@ -138,15 +138,44 @@ and should be optimized when ported.
 - [ ] Lighthouse performance check
 - [ ] Verify `out/` static build is correct
 
-### Phase 6 — Deploy
-- [ ] Build static export
-- [ ] Upload `out/` to Namecheap `public_html` (cPanel/FTP)
-- [ ] Point Hostinger domain DNS to Namecheap
+### Phase 6 — Deploy ✅
+- [x] Build static export
+- [x] Upload `out/` to Namecheap `public_html`
+- [x] Point Hostinger domain DNS to Namecheap (live at https://idared.org)
 - [ ] (Optional) GitHub Action to auto-deploy via FTP
+
+**How to deploy** (do NOT use cPanel's zip + Extract, see below):
+```
+cd web
+npm run build
+npm run deploy          # FTP upload, resumable; re-run if it drops
+```
+Credentials live in `web/.env.local` (gitignored). Verify a deploy with
+https://idared.org/sitemap.xml, the entry count should match the new build.
+
+⚠️ **cPanel "Extract" does not work on this account.** A zip uploads fine and
+Extract reports success, folder timestamps even update, but no file is
+actually written. Two structurally different zips (one with `./`-prefixed
+paths, one without) both left the site untouched. Disk quota was not the
+cause (48 MB used, unlimited). `npm run deploy` bypasses it entirely.
 
 ---
 
 ## Changelog
+- 2026-08-02: **Deployed to production.** Resource Centre, the calmer motif
+  motion, and the Child Protection policy are live on https://idared.org.
+  Verified: 23 sitemap entries (was 21), `/resources/` 200, PDF 200 with
+  `Content-Disposition: inline` and a one-week cache, Resources in the nav on
+  every page, homepage `last-modified` now current.
+  Deploy tooling: `npm run deploy` (`web/scripts/deploy.mjs`, `basic-ftp`)
+  uploads `out/` file by file over FTPS. Built after cPanel's Extract turned
+  out to silently discard every file; see the Phase 6 warning above. The
+  first run died at ~245/317 with `ECONNRESET` on the control socket, which
+  shared hosts do routinely, so the uploader is now resumable (skips files
+  already present at the same size) and reconnects and retries on recoverable
+  errors. Also removed the five unused create-next-app placeholder SVGs, four
+  by hand in File Manager plus `window.svg` over FTP.
+
 - 2026-08-01: Added the **Resource Centre** page (`/resources`), a tabbed
   document library with three tabs: Internal Documents, Operating Procedures,
   Reports. New `src/data/documents.ts` (typed entries + category metadata) and
