@@ -2,21 +2,29 @@
   Deploy the static export in `out/` straight to the web host over FTP.
 
   This exists because cPanel's "Extract" silently refuses to write files on
-  this account, so zip-and-extract deploys appear to succeed while changing
-  nothing. Uploading file by file removes the extractor from the loop.
+  this account: a zip uploads fine and reports success, but no file is
+  actually replaced. Uploading file by file removes the extractor entirely.
+
+  The upload is RESUMABLE. Shared hosts routinely reset the FTP control
+  socket partway through a few hundred files, so this script:
+    - skips files already on the server at the same size,
+    - reconnects and retries a file that fails,
+    - can simply be re-run after a hard failure and will pick up where it
+      stopped.
 
   Usage:
       npm run build
-      npm run deploy           # upload
-      npm run deploy:dry       # list what would upload, connect to nothing
+      npm run deploy            # upload (resumes automatically)
+      npm run deploy:dry        # list the payload, connect to nothing
+      npm run deploy -- --force # re-upload everything, ignore size matches
 
   Credentials come from `web/.env.local` (gitignored) or the environment:
 
       FTP_HOST=premium250.web-hosting.com
-      FTP_USER=your_cpanel_or_ftp_user
-      FTP_PASSWORD=your_password
-      FTP_REMOTE_DIR=/public_html      # optional, this is the default
-      FTP_SECURE=true                  # optional, set false only if FTPS fails
+      FTP_USER=deploy@idared.org
+      FTP_PASSWORD=...
+      FTP_REMOTE_DIR=/         # account rooted at public_html
+      FTP_SECURE=true          # set false only if FTPS fails outright
 
   Nothing on the server is deleted; files are added and overwritten in place.
 */
@@ -30,6 +38,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const webRoot = resolve(here, "..");
 const localDir = join(webRoot, "out");
 const dryRun = process.argv.includes("--dry-run");
+const force = process.argv.includes("--force");
 
 /* ---------------------------------------------------------------- config */
 
@@ -57,7 +66,8 @@ loadEnvFile(join(webRoot, ".env.local"));
 const host = process.env.FTP_HOST;
 const user = process.env.FTP_USER;
 const password = process.env.FTP_PASSWORD;
-const remoteDir = process.env.FTP_REMOTE_DIR || "/public_html";
+const rawRemote = process.env.FTP_REMOTE_DIR || "/public_html";
+const remoteRoot = rawRemote === "/" ? "" : rawRemote.replace(/\/$/, "");
 const useTls = (process.env.FTP_SECURE || "true").toLowerCase() !== "false";
 
 /* ------------------------------------------------------------ pre-flight */
@@ -72,43 +82,43 @@ if (!existsSync(localDir)) {
   fail("No `out/` folder found.", "Run `npm run build` first.");
 }
 
-function walk(dir) {
-  let files = [];
-  let bytes = 0;
+/** Every file under out/, as { local, remote, size }, sorted small-first. */
+function collect(dir, prefix = "") {
+  let out = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
     if (entry.isDirectory()) {
-      const sub = walk(full);
-      files = files.concat(sub.files);
-      bytes += sub.bytes;
+      out = out.concat(collect(full, rel));
     } else {
-      files.push(full);
-      bytes += statSync(full).size;
+      out.push({
+        local: full,
+        remote: `${remoteRoot}/${rel}`,
+        rel,
+        size: statSync(full).size,
+      });
     }
   }
-  return { files, bytes };
+  return out;
 }
 
-const { files, bytes } = walk(localDir);
-const mb = (bytes / 1024 / 1024).toFixed(1);
+const files = collect(localDir);
+const totalBytes = files.reduce((n, f) => n + f.size, 0);
 
-if (files.length === 0) {
-  fail("`out/` is empty.", "Run `npm run build` first.");
-}
+if (files.length === 0) fail("`out/` is empty.", "Run `npm run build` first.");
 
-// Guard against the classic silent breakage: a build that dropped .htaccess.
-const hasHtaccess = existsSync(join(localDir, ".htaccess"));
+const hasHtaccess = files.some((f) => f.rel === ".htaccess");
 
 console.log(`\n  Local:   ${localDir}`);
-console.log(`  Remote:  ${remoteDir}`);
-console.log(`  Payload: ${files.length} files, ${mb} MB`);
+console.log(`  Remote:  ${rawRemote}`);
+console.log(
+  `  Payload: ${files.length} files, ${(totalBytes / 1024 / 1024).toFixed(1)} MB`
+);
 console.log(`  .htaccess included: ${hasHtaccess ? "yes" : "NO (check public/)"}`);
 
 if (dryRun) {
   console.log("\n  Dry run, nothing was uploaded. Sample of files:");
-  for (const f of files.slice(0, 15)) {
-    console.log(`    ${f.slice(localDir.length + 1).replace(/\\/g, "/")}`);
-  }
+  for (const f of files.slice(0, 15)) console.log(`    ${f.rel}`);
   if (files.length > 15) console.log(`    ... and ${files.length - 15} more`);
   process.exit(0);
 }
@@ -116,90 +126,170 @@ if (dryRun) {
 if (!host || !user || !password) {
   fail(
     "Missing FTP credentials.",
-    "Create web/.env.local with FTP_HOST, FTP_USER and FTP_PASSWORD.\n" +
-      "  Get them from cPanel > FTP Accounts (use the account's full username)."
+    "Create web/.env.local with FTP_HOST, FTP_USER and FTP_PASSWORD."
   );
+}
+
+/* ---------------------------------------------------------------- client */
+
+let client;
+
+async function connect() {
+  client = new Client(60_000);
+  client.ftp.verbose = false;
+
+  const attempt = async (secure, rejectUnauthorized) => {
+    await client.access({
+      host,
+      user,
+      password,
+      secure,
+      secureOptions: secure ? { rejectUnauthorized } : undefined,
+    });
+  };
+
+  if (useTls) {
+    try {
+      await attempt(true, true);
+    } catch (err) {
+      // Shared hosts often present a certificate for the server hostname
+      // rather than the domain, which fails strict verification.
+      if (!/certificate|self.signed|altname|CERT_/i.test(String(err))) throw err;
+      client = new Client(60_000);
+      client.ftp.verbose = false;
+      await attempt(true, false);
+    }
+  } else {
+    await attempt(false);
+  }
+
+  // Long sessions with many small files are the case that gets reset; a
+  // keep-alive on the control socket makes idle timeouts less likely.
+  client.ftp.socket?.setKeepAlive?.(true, 10_000);
+}
+
+const ensured = new Set();
+
+async function ensureRemoteDir(dir) {
+  if (!dir || dir === "/" || ensured.has(dir)) return;
+  await client.ensureDir(dir);
+  await client.cd("/");
+  ensured.add(dir);
 }
 
 /* ---------------------------------------------------------------- upload */
 
-async function connect(client, secure, rejectUnauthorized) {
-  await client.access({
-    host,
-    user,
-    password,
-    secure,
-    secureOptions: secure ? { rejectUnauthorized } : undefined,
-  });
+let uploaded = 0;
+let skipped = 0;
+let reconnects = 0;
+const failures = [];
+
+function line(text) {
+  process.stdout.write(`\r  ${text.slice(0, 76).padEnd(78)}`);
 }
 
-const client = new Client(30_000);
-client.ftp.verbose = false;
+async function sendFile(file) {
+  const dir = dirname(file.remote).replace(/\\/g, "/");
 
-// trackProgress fires repeatedly for the same file as bytes move, so count
-// distinct names rather than events.
-const seen = new Set();
-client.trackProgress((info) => {
-  if (info.type !== "upload" || !info.name) return;
-  seen.add(info.name);
-  const name = info.name.replace(/\\/g, "/");
-  process.stdout.write(
-    `\r  [${seen.size}/${files.length}] ${name.slice(-60).padEnd(62)}`
-  );
-});
+  // Already there at the same size? Leave it alone. This is what makes a
+  // re-run after a dropped connection cheap.
+  if (!force) {
+    const remoteSize = await client.size(file.remote).catch(() => -1);
+    if (remoteSize === file.size) {
+      skipped += 1;
+      return;
+    }
+  }
 
-try {
-  if (useTls) {
+  await ensureRemoteDir(dir);
+  await client.uploadFrom(file.local, file.remote);
+  uploaded += 1;
+}
+
+async function sendWithRetry(file) {
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
     try {
-      await connect(client, true, true);
-      console.log("\n  Connected over FTPS (certificate verified).");
+      await sendFile(file);
+      return;
     } catch (err) {
-      // Shared hosts often present a certificate for the server hostname
-      // rather than the domain, which fails strict verification.
-      if (/certificate|self.signed|altname|CERT_/i.test(String(err))) {
-        console.log(
-          "\n  Certificate not verifiable, retrying FTPS without strict checking."
+      const message = String(err && err.message ? err.message : err);
+      const recoverable =
+        /ECONNRESET|EPIPE|ETIMEDOUT|closed|timeout|socket|421|425|426/i.test(
+          message
         );
-        await connect(client, true, false);
-        console.log("  Connected over FTPS (encrypted, certificate unverified).");
-      } else {
-        throw err;
+      if (!recoverable || attempt === 4) {
+        failures.push({ rel: file.rel, message });
+        return;
+      }
+      // The control socket died. Rebuild the session and carry on.
+      reconnects += 1;
+      line(`connection lost, reconnecting (${reconnects}) ...`);
+      try {
+        client.close();
+      } catch {}
+      ensured.clear();
+      await new Promise((r) => setTimeout(r, 2000 * attempt));
+      try {
+        await connect();
+      } catch (reconnectErr) {
+        failures.push({ rel: file.rel, message: String(reconnectErr) });
+        return;
       }
     }
-  } else {
-    await connect(client, false);
-    console.log("\n  Connected over plain FTP (credentials sent unencrypted).");
+  }
+}
+
+try {
+  await connect();
+  console.log(
+    `\n  Connected over ${useTls ? "FTPS" : "plain FTP"}. Uploading into ${rawRemote} ...\n`
+  );
+
+  let index = 0;
+  for (const file of files) {
+    index += 1;
+    line(`[${index}/${files.length}] ${file.rel}`);
+    await sendWithRetry(file);
   }
 
-  await client.ensureDir(remoteDir);
-  console.log(`  Uploading into ${remoteDir} ...\n`);
+  line("");
+  console.log(`\n\n  Uploaded:   ${uploaded}`);
+  console.log(`  Skipped:    ${skipped} (already on server, same size)`);
+  if (reconnects) console.log(`  Reconnects: ${reconnects}`);
 
-  // Mirrors the directory: creates folders, overwrites files, and never
-  // deletes anything already on the server.
-  await client.uploadFromDir(localDir, remoteDir);
-
-  console.log(`\n\n  Done. ${seen.size} files uploaded.`);
-  console.log("  Verify with: https://idared.org/sitemap.xml (expect 23 <loc> entries)");
+  if (failures.length) {
+    console.log(`  Failed:     ${failures.length}`);
+    for (const f of failures.slice(0, 10)) {
+      console.log(`    ${f.rel}  ${f.message}`);
+    }
+    if (failures.length > 10) {
+      console.log(`    ... and ${failures.length - 10} more`);
+    }
+    console.log("\n  Re-run `npm run deploy` to retry just the missing files.");
+    process.exitCode = 1;
+  } else {
+    console.log("\n  Deploy complete.");
+    console.log(
+      "  Verify: https://idared.org/sitemap.xml should list 23 <loc> entries."
+    );
+  }
 } catch (err) {
   const message = String(err && err.message ? err.message : err);
-  console.error(`\n\n  Upload failed: ${message}`);
+  console.error(`\n\n  Deploy failed: ${message}`);
   if (/530|login|password|authentication/i.test(message)) {
-    console.error(
-      "  That looks like bad credentials. In cPanel > FTP Accounts, use the\n" +
-        "  FULL username shown there (often user@idared.org) and reset the\n" +
-        "  password if unsure."
-    );
+    console.error("  Bad credentials. Check FTP_USER and FTP_PASSWORD.");
   } else if (/ENOTFOUND|EAI_AGAIN/i.test(message)) {
-    console.error("  Host not found. Check FTP_HOST in web/.env.local.");
+    console.error("  Host not found. Check FTP_HOST.");
   } else if (/ECONNREFUSED|ETIMEDOUT|timeout/i.test(message)) {
     console.error(
-      "  Could not reach the server. Some networks block FTP; try again on\n" +
-        "  another connection, or set FTP_SECURE=false to test plain FTP."
+      "  Could not reach the server. Some networks block FTP; try another\n" +
+        "  connection, or set FTP_SECURE=false to test plain FTP."
     );
-  } else if (/quota|storage|451|552/i.test(message)) {
-    console.error("  The account may be out of disk space. Check cPanel > Disk Usage.");
   }
-  process.exit(1);
+  console.error("  Re-run `npm run deploy`; finished files are skipped.");
+  process.exitCode = 1;
 } finally {
-  client.close();
+  try {
+    client?.close();
+  } catch {}
 }
