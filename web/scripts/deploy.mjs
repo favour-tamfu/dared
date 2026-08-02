@@ -136,13 +136,16 @@ async function connect(client, secure, rejectUnauthorized) {
 const client = new Client(30_000);
 client.ftp.verbose = false;
 
-let uploaded = 0;
+// trackProgress fires repeatedly for the same file as bytes move, so count
+// distinct names rather than events.
+const seen = new Set();
 client.trackProgress((info) => {
-  if (info.type === "upload" && info.name) {
-    uploaded += 1;
-    const name = info.name.replace(/\\/g, "/");
-    process.stdout.write(`\r  [${uploaded}/${files.length}] ${name.slice(-60).padEnd(62)}`);
-  }
+  if (info.type !== "upload" || !info.name) return;
+  seen.add(info.name);
+  const name = info.name.replace(/\\/g, "/");
+  process.stdout.write(
+    `\r  [${seen.size}/${files.length}] ${name.slice(-60).padEnd(62)}`
+  );
 });
 
 try {
@@ -175,7 +178,7 @@ try {
   // deletes anything already on the server.
   await client.uploadFromDir(localDir, remoteDir);
 
-  console.log(`\n\n  Done. ${uploaded} files uploaded.`);
+  console.log(`\n\n  Done. ${seen.size} files uploaded.`);
   console.log("  Verify with: https://idared.org/sitemap.xml (expect 23 <loc> entries)");
 } catch (err) {
   const message = String(err && err.message ? err.message : err);
