@@ -11,6 +11,7 @@ static site for hosting anywhere.
 ## Structure
 
 - `web/` — the Next.js application (all source)
+- `MAINTENANCE.md` — **how to add documents and events, and how to deploy**
 - `PROGRESS.md` — rebuild progress tracker and decisions
 
 ## Develop
@@ -21,14 +22,17 @@ npm install
 npm run dev      # http://localhost:3000
 ```
 
-## Build (static export)
+## Build & deploy
 
 ```bash
 cd web
 npm run build    # outputs static files to web/out/
+npm run deploy   # uploads web/out/ to the live server over FTP
 ```
 
-Upload the contents of `web/out/` to any static host.
+Deploying needs FTP credentials in `web/.env.local` (gitignored). Do **not**
+use cPanel's zip + Extract, it silently discards files on this host. See
+[MAINTENANCE.md](MAINTENANCE.md) for the full story.
 
 ---
 
