@@ -11,6 +11,8 @@ node_modules/
 web/.next/
 web/out/
 web/next-env.d.ts
+# Packaged upload for cPanel (regenerate from web/out any time)
+dared-site.zip
 
 # Env / secrets
 .env

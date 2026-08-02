@@ -147,23 +147,22 @@
   }
 }
 
-/* Dense, contained motif field on inner pages, fluid, wandering (water-like)
-   drift. Start/end differ by exactly one tile (80px) so it loops seamlessly. */
+/* Dense, contained motif field on inner pages. A very slow, near-vertical
+   drift: the sideways wander is kept tiny (max 6px) so the texture reads as
+   still at a glance and never pulls the eye off the content. Start/end differ
+   by exactly one tile (80px) so it loops seamlessly. */
 @keyframes toghu-field {
   0% {
     background-position: 0px 0px;
   }
-  20% {
-    background-position: 34px -22px;
+  25% {
+    background-position: 5px -20px;
   }
-  40% {
-    background-position: 14px -52px;
+  50% {
+    background-position: 2px -40px;
   }
-  60% {
-    background-position: -26px -40px;
-  }
-  80% {
-    background-position: -16px -68px;
+  75% {
+    background-position: -5px -60px;
   }
   100% {
     background-position: 0px -80px;

@@ -15,6 +15,22 @@ ErrorDocument 404 /404.html
   ExpiresByType image/svg+xml "access plus 1 year"
   ExpiresByType image/x-icon "access plus 1 year"
   ExpiresByType font/woff2 "access plus 1 year"
+  # Resource Centre files: cached, but short enough that a re-upload shows up
+  ExpiresByType application/pdf "access plus 1 week"
+</IfModule>
+
+# Resource Centre documents should OPEN in the browser's viewer, not download.
+# The explicit "Download" links on /resources/ use the HTML `download`
+# attribute, which still forces a save for same-origin files, so both
+# behaviours work. Without this, a host that defaults to `attachment` would
+# turn every "View document" click into a download prompt.
+<IfModule mod_mime.c>
+  AddType application/pdf .pdf
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.pdf$">
+    Header set Content-Disposition inline
+  </FilesMatch>
 </IfModule>
 
 # Force HTTPS — UNCOMMENT this block AFTER AutoSSL has issued your certificate

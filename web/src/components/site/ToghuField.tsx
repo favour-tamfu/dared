@@ -8,9 +8,16 @@ import { useEffect, useRef } from "react";
   sit inside a `relative overflow-hidden` body container so it stays CONTAINED
   between the top and bottom hems, it can't escape that box on scroll.
 
-  Motion: a calm continuous drift (CSS `background-position`) plus an eased,
-  water-like response to scrolling (a lerped `transform`).
+  Motion is deliberately near-imperceptible: a very slow continuous drift (CSS
+  `background-position`, one tile every two minutes) plus a slight eased
+  response to scrolling (a lerped `transform`). It should read as a still
+  texture that happens to breathe, never as something moving on the page.
 */
+
+/** Seconds for the texture to travel one full tile. Higher = calmer. */
+const DRIFT_DURATION = 120;
+/** Scroll parallax strength. Higher = more movement while scrolling. */
+const SCROLL_FACTOR = 0.015;
 
 const STROKE = "#2a3566"; // soft velvet; calmed by the low layer opacity
 
@@ -53,7 +60,7 @@ export function ToghuField({ opacity = 0.3 }: { opacity?: number }) {
     let raf = 0;
     let cur = 0;
     const tick = () => {
-      const target = window.scrollY * 0.05;
+      const target = window.scrollY * SCROLL_FACTOR;
       cur += (target - cur) * 0.06; // ease toward target → water-like settle
       if (ref.current) {
         ref.current.style.transform = `translate3d(0, ${cur.toFixed(2)}px, 0)`;
@@ -76,7 +83,9 @@ export function ToghuField({ opacity = 0.3 }: { opacity?: number }) {
         backgroundRepeat: "repeat",
         backgroundSize: "80px 80px",
         opacity,
-        animation: "toghu-field 38s ease-in-out infinite",
+        // `linear` rather than easing: a uniform crawl draws less attention
+        // than a loop that visibly speeds up and slows down.
+        animation: `toghu-field ${DRIFT_DURATION}s linear infinite`,
       }}
     />
   );
