@@ -1,81 +1,91 @@
-# Official Website for DARED Cameroon
+# idared.org — the original site (archived)
 
-<!-- Professional Badges -->
+![Archived](https://img.shields.io/badge/status-archived-6b7280?style=for-the-badge)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
+![Bootstrap 5](https://img.shields.io/badge/Bootstrap_5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-> The official website for Direct Action for Rights and Equity Development (DARED), a non-profit organization based in Cameroon dedicated to community empowerment, cultural preservation, and sustainable development.
+This branch is a **frozen snapshot of the first website built for DARED** — *Direct Action
+for Rights Equity and Development*, a Cameroonian non-profit working on community
+empowerment, cultural heritage preservation, and sustainable development.
 
-This project was developed to provide DARED with a professional, modern, and accessible digital presence, enabling them to reach a wider audience, showcase their impactful work, and engage with volunteers and supporters.
+It was hand-built as a multi-page Bootstrap 5 static site and served
+**[idared.org](https://idared.org)** until **August 2026**, when it was replaced by a
+Next.js rebuild.
 
-## 🚀 Live Demo
+> ### ⚠️ This is not the live site
+> The site running at **[idared.org](https://idared.org)** today is built from the
+> **[`main`](https://github.com/favour-tamfu/dared/tree/main)** branch. Nothing on this
+> branch is deployed, and changes made here will never reach the web.
 
-You can view the live, deployed version of the website here:
+## Why it's kept
 
-**[idared.org](https://idared.org/index.html)** 
+- **Content of record.** Every page of copy the organisation originally published.
+- **Original photography.** All 77 images in `Images/` are the untouched originals. The
+  rebuild ships compressed versions, so this branch is the master copy and the reason
+  image optimisation over there is never destructive.
+- **Provenance.** It's where the site started, and it should stay readable.
 
+It is a reference archive. It is not maintained, and it takes no fixes.
 
----
+## What the site was
 
+A fully responsive, mobile-first static site — no build step, no framework, no backend.
 
-## ✨ Key Features
+| File | Page |
+|---|---|
+| `index.html` | Home: auto-rotating hero slideshow (3 slides, 5s) over a grid of event cards with Show More / Show Less and per-card social sharing |
+| `About.html` | About DARED |
+| `events.html` | Events listing |
+| `gallery.html` | Photo and video gallery, accordion-style so nothing left the page |
+| `GetInvolved.html` | Volunteer and get-involved form |
+| `Page1.html` – `Page8.html` | Individual event detail pages, all on one template |
 
-This website is a fully responsive static site with several key features:
+Supporting files: six stylesheets in `Styles/`, `slideDemo.js` plus inline scripts for the
+slideshow and card interactions, and `Images/` for the photography.
 
-*   **Fully Responsive Design:** A mobile-first approach using Bootstrap 5 ensures a seamless experience on all devices, from smartphones to desktops.
-*   **Multi-Page Architecture:** Clear and intuitive navigation across several pages including Home, About, Events, Gallery, and Get Involved.
-*   **Dynamic Event Gallery:** An interactive accordion-style gallery allows users to explore photos and videos from past events without leaving the page.
-*   **Scalable Content Model:** A consistent and professional template for event subpages makes it easy to add new content and expand the site over time.
-*   **Functional Contact Forms:** Integrated with Formspree to reliably handle volunteer applications and newsletter subscriptions without requiring a dedicated backend.
+**Built with:** HTML5 · CSS3 · Bootstrap 5 · vanilla JavaScript · Font Awesome 6 ·
+Google Fonts (Montserrat for headings, Lato for body) · Formspree for the newsletter and
+volunteer forms, which is what let a purely static site take submissions with no server.
 
----
+## Viewing it locally
 
-## 🛠️ Tech Stack & Tools
+No install, no build, no dependencies.
 
-This project was built using modern front-end technologies and best practices:
+```bash
+git clone --branch legacy --single-branch --depth 1 \
+  https://github.com/favour-tamfu/dared.git dared-legacy
+cd dared-legacy
+```
 
-*   **HTML5:** Semantic markup for structure and accessibility.
-*   **CSS3:** Custom styling for unique branding and layout.
-*   **Bootstrap 5:** A powerful CSS framework for responsiveness, grid system, and pre-built components.
-*   **JavaScript:** Used for interactive elements and form handling logic.
-*   **Formspree:** A third-party service for backend form processing.
-*   **Git & GitHub:** For version control and repository hosting.
-*   **Google Fonts & Font Awesome:** For modern typography and icons.
+Then open `index.html` in a browser. For working relative paths and live reload, serve the
+folder instead — VS Code's **Live Server** extension, or:
 
----
+```bash
+npx serve .
+```
 
-## 🏃‍♂️ Running the Project Locally
+Note that the Formspree endpoints in the forms are the organisation's real ones and are
+still live. **Don't submit the forms while testing.**
 
-No complex setup is required to run this project. As it's a static website, you just need a web browser.
+## The site today
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/favour-tamfu/dared.git
-    ```
+The current site is a Next.js 16 + TypeScript + Tailwind CSS static export with a
+heritage-rooted *Toghu* design language, a Resource Centre for published documents, and
+per-event pages. Source, documentation, and deployment live on
+**[`main`](https://github.com/favour-tamfu/dared/tree/main)**.
 
-2.  **Navigate to the project directory:**
-    ```bash
-    cd dared
-    ```
+## License
 
-3.  **Open `index.html` in your browser:**
-    Simply double-click the `index.html` file, or right-click and choose "Open with..." your favorite browser.
+**This project is not open source.** It was built for DARED, and the source code, design,
+copy, photography, and the DARED name and logo are the property of DARED, all rights
+reserved. Readable for reference; not licensed for reuse. See [LICENSE](LICENSE).
 
-    > **Pro Tip:** For the best experience, I recommend using the **Live Server** extension in Visual Studio Code, which provides live reloading on code changes.
+## Contact
 
----
+Built by **Favour Tamfu**
+· [GitHub](https://github.com/favour-tamfu)
+· [LinkedIn](https://www.linkedin.com/in/favour-tamfu)
 
-## 📜 License
-
-This project is open-source and available under the **[MIT License](LICENSE)**.
-
----
-
-## 👤 Contact
-
-Favour Tamfu
-
-*   **GitHub:** [@favour-tamfu](https://github.com/favour-tamfu)
-*   **LinkedIn:** (https://www.linkedin.com/in/favour-tamfu) 
+DARED · [info@idared.org](mailto:info@idared.org) · [idared.org](https://idared.org)
