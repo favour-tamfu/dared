@@ -1,0 +1,26 @@
+Copyright (c) 2026 Direct Action for Rights Equity and Development (DARED).
+All rights reserved.
+
+This website was designed and developed for DARED by Favour Tamfu.
+
+This is not open source software. No licence, express or implied, is granted to
+any person obtaining a copy of this repository.
+
+Without prior written permission from DARED you may not:
+
+  - copy, reproduce, or republish this repository or any part of it;
+  - use the source code, design, layout, or visual system in another project,
+    whether commercial or non-commercial;
+  - modify, adapt, translate, or create derivative works from it;
+  - distribute, sublicense, sell, or host it, in original or modified form;
+  - use the photography, written content, DARED name, logo, or branding for any
+    purpose.
+
+The repository is publicly readable so the work can be viewed and referenced.
+Public visibility is not a grant of any of the rights above.
+
+Third-party components used by this project (for example Next.js, React, and
+Tailwind CSS) remain subject to their own licences, which are unaffected by
+this notice.
+
+For permissions, licensing, or any other enquiry, contact info@idared.org.
