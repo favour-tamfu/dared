@@ -1,11 +1,25 @@
+"use client";
+
 import Link from "next/link";
-import { navLinks, siteConfig } from "@/lib/nav";
+import { usePathname } from "next/navigation";
+import { siteConfig } from "@/lib/nav";
 import { Container } from "@/components/ui/Container";
 import { ToghuWatermark, ToghuTrim } from "@/components/site/ToghuMotif";
 import { Logo } from "@/components/site/Logo";
 import { NewsletterForm } from "@/components/site/Forms";
+import { donateHref, localeFromPath, nav, ui } from "@/lib/i18n";
 
+/*
+  A client component only so it can read the locale off the path. The root
+  layout renders one footer for every route and has no params of its own, so
+  there is nothing to pass down; the alternative was splitting the layout per
+  language, which would have meant moving every existing English page.
+*/
 export function Footer() {
+  const locale = localeFromPath(usePathname());
+  const navLinks = nav[locale];
+  const t = ui[locale];
+
   return (
     <footer className="relative z-20 overflow-hidden bg-velvet-900 text-velvet-50">
       <ToghuTrim />
@@ -18,21 +32,20 @@ export function Footer() {
               {siteConfig.fullName}
             </p>
             <p className="mt-3 text-sm leading-relaxed text-velvet-100">
-              A non-profit fostering sustainable, vibrant communities in Cameroon
-              through hands-on engagement and meaningful collaboration.
+              {t.footerBlurb}
             </p>
             <Link
-              href="/get-involved#donate"
+              href={donateHref[locale]}
               className="mt-5 inline-flex items-center gap-2 rounded-full bg-gold-400 px-5 py-2.5 text-sm font-semibold text-velvet-900 transition-colors hover:bg-gold-300"
             >
-              Donate
+              {t.donate}
               <span aria-hidden>→</span>
             </Link>
           </div>
 
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gold-300">
-              Explore
+              {t.explore}
             </h4>
             <ul className="mt-4 space-y-2 text-sm">
               {navLinks.map((link) => (
@@ -42,6 +55,11 @@ export function Footer() {
                     className="text-velvet-100 transition-colors hover:text-white"
                   >
                     {link.label}
+                    {link.foreign && (
+                      <span className="ml-1.5 text-xs text-velvet-200">
+                        ({t.englishOnly})
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
@@ -50,7 +68,7 @@ export function Footer() {
 
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gold-300">
-              Contact
+              {t.contact}
             </h4>
             <ul className="mt-4 space-y-2 text-sm text-velvet-100">
               <li>
@@ -86,17 +104,15 @@ export function Footer() {
 
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gold-300">
-              Newsletter
+              {t.newsletter}
             </h4>
-            <p className="mt-4 text-sm text-velvet-100">
-              Get updates on our work and events.
-            </p>
+            <p className="mt-4 text-sm text-velvet-100">{t.newsletterBlurb}</p>
             <NewsletterForm />
           </div>
         </div>
 
         <div className="mt-12 border-t border-velvet-700 pt-6 text-center text-xs text-velvet-200">
-          © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          © {new Date().getFullYear()} {siteConfig.name}. {t.rights}
         </div>
       </Container>
     </footer>

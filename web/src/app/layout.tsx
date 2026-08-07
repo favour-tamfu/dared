@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { LightboxProvider } from "@/components/site/Lightbox";
+import { ScrollReveal } from "@/components/site/ScrollReveal";
+import { Analytics } from "@/components/site/Analytics";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -40,7 +42,12 @@ export const metadata: Metadata = {
     "UNESCO heritage volunteers",
   ],
   authors: [{ name: "DARED" }],
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    languages: { en: "/", fr: "/fr/" },
+    // Lets browsers and feed readers discover the events feed automatically.
+    types: { "application/rss+xml": "/feed.xml" },
+  },
   openGraph: {
     title: "DARED | Direct Action for Rights Equity and Development",
     description:
@@ -97,6 +104,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
+        <Analytics />
+        <ScrollReveal />
         <LightboxProvider>
           <Header />
           <main className="flex-1">{children}</main>

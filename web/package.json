@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-assets.mjs && node scripts/responsive-images.mjs && next build",
     "start": "next start",
     "lint": "eslint",
     "deploy": "node scripts/deploy.mjs",
-    "deploy:dry": "node scripts/deploy.mjs --dry-run"
+    "deploy:dry": "node scripts/deploy.mjs --dry-run",
+    "images": "node scripts/responsive-images.mjs",
+    "check": "node scripts/check-assets.mjs"
   },
   "dependencies": {
     "next": "16.2.9",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useSyncExternalStore, type KeyboardEvent } from "react";
+import { useRef, type KeyboardEvent } from "react";
 import {
   documentCategories,
   documentsIn,
@@ -8,6 +8,24 @@ import {
   type DocumentCategory,
 } from "@/data/documents";
 import { siteConfig } from "@/lib/nav";
+import { setHash, useHash } from "@/lib/hash";
+import { categoryFr, documentUiFr, summaryFr } from "@/data/documents.fr";
+
+type Locale = "en" | "fr";
+
+const documentUiEn = {
+  tabsLabel: "Document categories",
+  view: "View document",
+  open: "Open document",
+  download: "Download",
+  request: "Request access",
+  requestSuffix: "by email",
+  updated: "Updated",
+  newTab: "(opens in a new tab)",
+  emptyBody:
+    "We are putting this section together. Please check back soon, and in the meantime we are happy to help you directly.",
+  emptyCta: "Ask us for a document",
+};
 
 /*
   Tabbed document library for the Resource Centre.
@@ -44,32 +62,6 @@ function DocumentIcon() {
   );
 }
 
-/*
-  The active tab IS the URL hash, so it is read as external state rather than
-  mirrored into React state. `replaceState` does not fire `hashchange`, so tab
-  clicks notify subscribers directly. On the server the hash is unknown, which
-  falls through to the first category; React re-renders with the real hash
-  after hydration.
-*/
-let hashListeners: (() => void)[] = [];
-
-function subscribeToHash(onChange: () => void) {
-  hashListeners.push(onChange);
-  window.addEventListener("hashchange", onChange);
-  return () => {
-    hashListeners = hashListeners.filter((l) => l !== onChange);
-    window.removeEventListener("hashchange", onChange);
-  };
-}
-
-const getHash = () => window.location.hash.slice(1);
-const getServerHash = () => "";
-
-function setHash(slug: string) {
-  window.history.replaceState(null, "", `#${slug}`);
-  hashListeners.forEach((notify) => notify());
-}
-
 function requestUrl(doc: DaredDocument) {
   const subject = `Document request: ${doc.title}`;
   const body = `Hello DARED,\n\nI would like to request a copy of "${doc.title}".\n\nThank you.`;
@@ -78,9 +70,11 @@ function requestUrl(doc: DaredDocument) {
   )}&body=${encodeURIComponent(body)}`;
 }
 
-function DocumentCard({ doc }: { doc: DaredDocument }) {
+function DocumentCard({ doc, locale }: { doc: DaredDocument; locale: Locale }) {
+  const t = locale === "fr" ? documentUiFr : documentUiEn;
   const isExternal = Boolean(doc.href?.startsWith("http"));
-  const meta = [doc.format, doc.size, `Updated ${doc.updated}`].filter(Boolean);
+  const summary = locale === "fr" ? summaryFr[doc.id] ?? doc.summary : doc.summary;
+  const meta = [doc.format, doc.size, `${t.updated} ${doc.updated}`].filter(Boolean);
 
   return (
     <article className="group relative flex h-full gap-5 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-sand-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
@@ -102,14 +96,14 @@ function DocumentCard({ doc }: { doc: DaredDocument }) {
               className="rounded-sm transition-colors after:absolute after:inset-0 after:rounded-3xl hover:text-velvet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-400 focus-visible:ring-offset-2"
             >
               {doc.title}
-              <span className="sr-only"> (opens in a new tab)</span>
+              <span className="sr-only"> {t.newTab}</span>
             </a>
           ) : (
             doc.title
           )}
         </h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">
-          {doc.summary}
+          {summary}
         </p>
 
         <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-ink-soft">
@@ -135,7 +129,7 @@ function DocumentCard({ doc }: { doc: DaredDocument }) {
           {doc.href ? (
             <>
               <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-crimson-600 transition-colors group-hover:text-crimson-700">
-                {isExternal ? "Open document" : "View document"}
+                {isExternal ? t.open : t.view}
                 <span
                   aria-hidden
                   className="transition-transform group-hover:translate-x-1"
@@ -151,7 +145,7 @@ function DocumentCard({ doc }: { doc: DaredDocument }) {
                   download
                   className="relative z-10 inline-flex items-center gap-1.5 rounded-full text-sm font-medium text-ink-soft transition-colors hover:text-velvet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-400 focus-visible:ring-offset-2"
                 >
-                  Download
+                  {t.download}
                   <span aria-hidden>↓</span>
                   <span className="sr-only">{doc.title}</span>
                 </a>
@@ -162,14 +156,16 @@ function DocumentCard({ doc }: { doc: DaredDocument }) {
               href={requestUrl(doc)}
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-velvet-700 transition-colors after:absolute after:inset-0 after:rounded-3xl hover:text-velvet-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-400 focus-visible:ring-offset-2"
             >
-              Request access
+              {t.request}
               <span
                 aria-hidden
                 className="transition-transform group-hover:translate-x-1"
               >
                 {"→"}
               </span>
-              <span className="sr-only">to {doc.title} by email</span>
+              <span className="sr-only">
+                {doc.title} {t.requestSuffix}
+              </span>
             </a>
           )}
         </div>
@@ -178,9 +174,17 @@ function DocumentCard({ doc }: { doc: DaredDocument }) {
   );
 }
 
-export function DocumentTabs() {
+export function DocumentTabs({ locale = "en" }: { locale?: Locale }) {
+  const t = locale === "fr" ? documentUiFr : documentUiEn;
+  const label = (key: DocumentCategory) =>
+    locale === "fr" ? categoryFr[key].label : key;
+  const blurb = (key: DocumentCategory, fallback: string) =>
+    locale === "fr" ? categoryFr[key].blurb : fallback;
+  const emptyTitle = (key: DocumentCategory, fallback: string) =>
+    locale === "fr" ? categoryFr[key].emptyTitle : fallback;
+
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const hash = useSyncExternalStore(subscribeToHash, getHash, getServerHash);
+  const hash = useHash();
 
   /*
     With no hash (including during SSR) open the first category that actually
@@ -216,12 +220,21 @@ export function DocumentTabs() {
       {/* Tablist */}
       <div
         role="tablist"
-        aria-label="Document categories"
+        aria-label={t.tabsLabel}
         className="flex flex-wrap gap-1.5 rounded-[1.75rem] bg-sand-100 p-1.5 ring-1 ring-sand-300 sm:inline-flex"
       >
         {documentCategories.map((category, index) => {
           const selected = category.slug === activeSlug;
           const count = documentsIn(category.key).length;
+
+          /*
+            The primary category keeps a raised, crimson-threaded pill while it
+            is unselected, so it still reads as the main way in even once a
+            visitor has moved to another tab.
+          */
+          const unselectedStyle = category.primary
+            ? "bg-white text-crimson-700 shadow-sm ring-1 ring-crimson-200 hover:text-crimson-800 hover:ring-crimson-300"
+            : "text-ink-soft hover:bg-white/70 hover:text-velvet-700";
 
           return (
             <button
@@ -238,16 +251,18 @@ export function DocumentTabs() {
               onClick={() => setHash(category.slug)}
               onKeyDown={(event) => onKeyDown(event, index)}
               className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-400 focus-visible:ring-offset-2 focus-visible:ring-offset-sand-100 sm:flex-none ${
-                selected
-                  ? "bg-velvet-800 text-white shadow-sm"
-                  : "text-ink-soft hover:bg-white/70 hover:text-velvet-700"
+                selected ? "bg-velvet-800 text-white shadow-sm" : unselectedStyle
               }`}
             >
-              {category.key}
+              {label(category.key)}
               {count > 0 && (
                 <span
                   className={`rounded-full px-2 py-0.5 text-xs font-bold ${
-                    selected ? "bg-white/15 text-gold-300" : "text-ink-soft/70"
+                    selected
+                      ? "bg-white/15 text-gold-300"
+                      : category.primary
+                        ? "bg-crimson-50 text-crimson-600"
+                        : "text-ink-soft"
                   }`}
                 >
                   {count}
@@ -278,13 +293,20 @@ export function DocumentTabs() {
             className="mt-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-crimson-400 focus-visible:ring-offset-4"
           >
             <p className="max-w-3xl text-lg leading-relaxed text-ink-soft">
-              {category.blurb}
+              {blurb(category.key, category.blurb)}
             </p>
 
+            {/*
+              The reveal class goes on a wrapper, not on the card itself:
+              `.reveal` sets a `transition` shorthand that would otherwise
+              override the card's own hover transition.
+            */}
             {categoryDocs.length > 0 ? (
               <div className="mt-8 grid gap-6 lg:grid-cols-2">
                 {categoryDocs.map((doc) => (
-                  <DocumentCard key={doc.id} doc={doc} />
+                  <div key={doc.id} className="reveal">
+                    <DocumentCard doc={doc} locale={locale} />
+                  </div>
                 ))}
               </div>
             ) : (
@@ -293,19 +315,18 @@ export function DocumentTabs() {
                   <DocumentIcon />
                 </div>
                 <p className="mt-5 font-display text-xl font-semibold text-ink">
-                  {category.emptyTitle}
+                  {emptyTitle(category.key, category.emptyTitle)}
                 </p>
                 <p className="mx-auto mt-3 max-w-md leading-relaxed text-ink-soft">
-                  We are putting this section together. Please check back soon,
-                  and in the meantime we are happy to help you directly.
+                  {t.emptyBody}
                 </p>
                 <a
                   href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(
-                    `Request: ${category.key}`
+                    `Request: ${label(category.key)}`
                   )}`}
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-crimson-600 transition-colors hover:text-crimson-700"
                 >
-                  Ask us for a document
+                  {t.emptyCta}
                   <span aria-hidden>→</span>
                 </a>
               </div>

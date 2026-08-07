@@ -80,7 +80,48 @@ export function NewsletterForm() {
 
 /* ---------- Get Involved volunteer form ---------- */
 
-export function VolunteerForm() {
+const volunteerCopy = {
+  en: {
+    thanks: "Thank you!",
+    received: "We've received your details and will be in touch soon.",
+    name: "Full name",
+    sex: "Sex",
+    choose: "Select an option",
+    male: "Male",
+    female: "Female",
+    other: "Other",
+    phone: "Phone number",
+    email: "Email address",
+    location: "Your location (city / region)",
+    about:
+      "Tell us a bit about yourself and why you'd like to volunteer",
+    submit: "Submit volunteer form",
+    submitting: "Submitting…",
+    error: "Something went wrong. Please try again, or email",
+  },
+  fr: {
+    thanks: "Merci !",
+    received:
+      "Nous avons bien reçu vos informations et vous recontacterons bientôt.",
+    name: "Nom complet",
+    sex: "Sexe",
+    choose: "Sélectionnez une option",
+    male: "Homme",
+    female: "Femme",
+    other: "Autre",
+    phone: "Numéro de téléphone",
+    email: "Adresse e-mail",
+    location: "Votre localité (ville / région)",
+    about:
+      "Parlez-nous un peu de vous et des raisons pour lesquelles vous souhaitez devenir bénévole",
+    submit: "Envoyer ma candidature",
+    submitting: "Envoi en cours…",
+    error: "Une erreur est survenue. Réessayez ou écrivez-nous à",
+  },
+} as const;
+
+export function VolunteerForm({ locale = "en" }: { locale?: "en" | "fr" }) {
+  const t = volunteerCopy[locale];
   const [status, setStatus] = useState<Status>("idle");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -105,11 +146,9 @@ export function VolunteerForm() {
           </svg>
         </span>
         <h3 className="mt-4 font-display text-xl font-semibold text-ink">
-          Thank you!
+          {t.thanks}
         </h3>
-        <p className="mt-2 text-sm text-ink-soft">
-          We&apos;ve received your details and will be in touch soon.
-        </p>
+        <p className="mt-2 text-sm text-ink-soft">{t.received}</p>
       </div>
     );
   }
@@ -118,46 +157,46 @@ export function VolunteerForm() {
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-ink">
-          Full name
+          {t.name}
         </label>
         <input id="name" name="name" type="text" required className={fieldClass} />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="sex" className="block text-sm font-medium text-ink">
-            Sex
+            {t.sex}
           </label>
           <select id="sex" name="sex" required defaultValue="" className={fieldClass}>
             <option value="" disabled>
-              Select an option
+              {t.choose}
             </option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="male">{t.male}</option>
+            <option value="female">{t.female}</option>
+            <option value="other">{t.other}</option>
           </select>
         </div>
         <div>
           <label htmlFor="contact" className="block text-sm font-medium text-ink">
-            Phone number
+            {t.phone}
           </label>
           <input id="contact" name="contact" type="tel" required className={fieldClass} />
         </div>
       </div>
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-ink">
-          Email address
+          {t.email}
         </label>
         <input id="email" name="email" type="email" required className={fieldClass} />
       </div>
       <div>
         <label htmlFor="location" className="block text-sm font-medium text-ink">
-          Your location (city / region)
+          {t.location}
         </label>
         <input id="location" name="location" type="text" required className={fieldClass} />
       </div>
       <div>
         <label htmlFor="additional-info" className="block text-sm font-medium text-ink">
-          Tell us a bit about yourself and why you&apos;d like to volunteer
+          {t.about}
         </label>
         <textarea id="additional-info" name="additional-info" rows={4} className={fieldClass} />
       </div>
@@ -166,11 +205,11 @@ export function VolunteerForm() {
         disabled={status === "submitting"}
         className="w-full rounded-full bg-crimson-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-crimson-600 disabled:opacity-70"
       >
-        {status === "submitting" ? "Submitting…" : "Submit volunteer form"}
+        {status === "submitting" ? t.submitting : t.submit}
       </button>
       {status === "error" && (
         <p className="text-sm font-medium text-crimson-600">
-          Something went wrong. Please try again, or email {siteConfig.email}.
+          {t.error} {siteConfig.email}.
         </p>
       )}
     </form>

@@ -4,14 +4,32 @@ import { EventCard } from "@/components/site/EventCard";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { ToghuWatermark, ToghuTrim } from "@/components/site/ToghuMotif";
+import { StatCounter } from "@/components/site/StatCounter";
 import { featuredEvents } from "@/data/events";
 
+/*
+  Each figure is taken from published reporting rather than rounded up, so it
+  can be defended if a partner asks:
+
+  - 1,000+ youths mobilised for community clean-ups, and 865 direct
+    participants, both from the year-one report of the Football for Social
+    Cohesion project (see that event's write-up).
+  - 500 palm trees planted at the Bafut Royal Palace, plus a further 200+ in
+    2025 per the annual report — stated as 500+ to stay on the safe side.
+  - 250 youths engaged through the World Heritage Volunteers campaign, from
+    the 2025 Annual Report.
+*/
 const stats = [
-  { value: "500", label: "Trees Planted" },
-  { value: "50+", label: "Children Trained" },
-  { value: "15+", label: "Countries Networked" },
-  { value: "10+", label: "Community Events" },
+  { value: 1000, suffix: "+", label: "Youths Mobilised" },
+  { value: 865, label: "Reached Through Sport" },
+  { value: 500, suffix: "+", label: "Trees Planted" },
+  { value: 250, label: "Heritage Volunteers" },
 ];
+
+// The home grid is a shop window, not an archive: it shows the most recent
+// featured events and sends people to /events for the rest. Without this the
+// grid grows by one card with every event added.
+const HOME_EVENT_COUNT = 6;
 
 const pillars = [
   {
@@ -38,14 +56,12 @@ export default function Home() {
         <ToghuWatermark id="stats-toghu" className="text-velvet-300" opacity={0.08} />
         <Container className="relative grid grid-cols-2 gap-8 py-14 lg:grid-cols-4">
           {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="font-display text-4xl font-semibold text-gold-300 sm:text-5xl">
-                {stat.value}
-              </p>
-              <p className="mt-2 text-sm font-medium uppercase tracking-wider text-velvet-100">
-                {stat.label}
-              </p>
-            </div>
+            <StatCounter
+              key={stat.label}
+              value={stat.value}
+              suffix={stat.suffix}
+              label={stat.label}
+            />
           ))}
         </Container>
       </section>
@@ -88,7 +104,7 @@ export default function Home() {
             {pillars.map((pillar) => (
               <div
                 key={pillar.title}
-                className="relative overflow-hidden rounded-3xl bg-sand-100 p-8 ring-1 ring-sand-300"
+                className="reveal relative overflow-hidden rounded-3xl bg-sand-100 p-8 ring-1 ring-sand-300"
               >
                 <span className="block h-1 w-10 rounded-full bg-gold-400" />
                 <h3 className="mt-5 text-xl font-semibold text-velvet-700">
@@ -123,8 +139,10 @@ export default function Home() {
           </div>
 
           <div className="mt-12 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredEvents.map((event) => (
-              <EventCard key={event.slug} event={event} />
+            {featuredEvents.slice(0, HOME_EVENT_COUNT).map((event) => (
+              <div key={event.slug} className="reveal">
+                <EventCard event={event} />
+              </div>
             ))}
           </div>
         </Container>

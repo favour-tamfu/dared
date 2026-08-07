@@ -10,7 +10,10 @@ export const metadata: Metadata = {
   title: "Get Involved",
   description:
     "Volunteer with DARED or support our work with a donation, help protect heritage, restore the environment, and empower communities across Cameroon.",
-  alternates: { canonical: "/get-involved/" },
+  alternates: {
+    canonical: "/get-involved/",
+    languages: { en: "/get-involved/", fr: "/fr/s-impliquer/" },
+  },
 };
 
 const ways = [
@@ -49,7 +52,7 @@ export default function GetInvolvedPage() {
                   </h2>
                   <div className="mt-8 space-y-6">
                     {ways.map((way) => (
-                      <div key={way.title} className="flex gap-4">
+                      <div key={way.title} className="reveal flex gap-4">
                         <div className="mt-1 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-crimson-500" />
                         <div>
                           <h3 className="text-lg font-semibold text-velvet-700">

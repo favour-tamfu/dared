@@ -174,6 +174,108 @@ node scripts/optimize-files.mjs public/images/my-photo.jpg
 Originals of everything imported from the old site are preserved on the
 `legacy` branch, so compression is never destructive.
 
+### Resolution matters more than file size
+
+`npm run build` now warns about photos that are used full width but are too
+small for it:
+
+```
+warning: /images/world-theatre-day.jpg is only 720px wide but is displayed
+         full width (want 1200px+)
+```
+
+This is a warning, not an error — the build continues. It means the photo
+will look soft as an article hero. Compression cannot fix it; only a
+higher-resolution original can. Photos saved from Facebook or WhatsApp are
+usually 400–600px wide and will always trigger this.
+
+### Responsive versions are generated for you
+
+`npm run images` (which `npm run build` runs automatically) writes a ladder of
+WebP sizes into `public/images/r/` so phones download a small file instead of
+the full-size one. You never edit that folder — delete it and it regenerates.
+
+---
+
+## The French site
+
+The site is bilingual. Every English page has a French counterpart:
+
+| English | Français |
+| --- | --- |
+| `/` | `/fr/` |
+| `/about/` | `/fr/a-propos/` |
+| `/events/` | `/fr/evenements/` |
+| `/events/<slug>/` | `/fr/evenements/<slug>/` |
+| `/gallery/` | `/fr/galerie/` |
+| `/resources/` | `/fr/ressources/` |
+| `/get-involved/` | `/fr/s-impliquer/` |
+
+**The organisation's name is never translated.** DARED is registered in English,
+so "Direct Action for Rights Equity and Development" stays exactly as it is in
+French copy. French text introduces the name, then explains in French what the
+organisation does.
+
+### Translating a new event
+
+After adding an event to `web/src/data/events.ts`, add its translation to
+`web/src/data/events.fr.ts`, keyed by the same slug:
+
+```ts
+"my-new-event": {
+  title: "Le titre en français",
+  excerpt: "Le résumé affiché sur la carte.",
+  body: ["Premier paragraphe.", "Deuxième paragraphe."],
+  photos: {
+    "/images/my-photo.jpg": { alt: "Description", caption: "Légende" },
+  },
+},
+```
+
+**If you skip this, nothing breaks.** An untranslated event falls back to its
+English text field by field, so the French page still works — it just shows
+English for that event until you translate it.
+
+Page furniture (menus, buttons, the footer) lives in `web/src/lib/i18n.ts`.
+Document summaries live in `web/src/data/documents.fr.ts`; document *titles*
+stay in English on purpose, because they name the actual English PDFs.
+
+---
+
+## Checking before you deploy
+
+```bash
+cd web
+npm run check
+```
+
+Fails if any image or PDF referenced in the site does not exist. This runs as
+part of `npm run build`, so a typo in a filename stops the build instead of
+becoming a broken image on the live site.
+
+---
+
+## Analytics (optional, not switched on)
+
+The site is wired for [Umami](https://umami.is) — privacy-first, cookieless,
+and **no cookie banner required**, because it stores nothing on the visitor's
+device and collects no personal data.
+
+Nothing is loaded until you configure it. To switch it on:
+
+1. Create a free account at <https://cloud.umami.is> and add `idared.org`.
+2. Copy the website ID it gives you.
+3. Add it to `web/.env.local`:
+
+   ```
+   NEXT_PUBLIC_UMAMI_WEBSITE_ID=your-id-here
+   ```
+
+4. `npm run build && npm run deploy`.
+
+To turn it off again, remove the line and rebuild. To move to a self-hosted
+instance later, also set `NEXT_PUBLIC_UMAMI_SRC` to your own script URL.
+
 ---
 
 ## Deploying

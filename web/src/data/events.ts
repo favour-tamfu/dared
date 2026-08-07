@@ -1,3 +1,5 @@
+import { eventFr } from "./events.fr";
+
 export type EventCategory =
   | "Environment"
   | "Heritage"
@@ -12,12 +14,38 @@ export type EventSection = {
   bullets?: string[];
 };
 
+/**
+ * A gallery photo. A bare string keeps the event title as its alt text; the
+ * object form carries alt text written for that specific picture, which is
+ * both better for screen readers and worth more for image search than the
+ * same title repeated a dozen times.
+ */
+export type GalleryImage =
+  | string
+  | {
+      src: string;
+      /** Describes this photo specifically. */
+      alt: string;
+      /** Optional line shown under the photo when enlarged. */
+      caption?: string;
+    };
+
 export type DaredEvent = {
   slug: string;
   title: string;
   category: EventCategory;
   /** Hero / card image */
   image: string;
+  /**
+   * ISO date the event took place, e.g. "2026-07-29". Optional: most of the
+   * events ported from the legacy site have no recorded date, and a guessed
+   * date is worse than none. Add one whenever it is known.
+   *
+   * Note this does NOT drive ordering — with most events undated, sorting on
+   * it would scramble the list. The array order below is the running order,
+   * newest first, maintained by hand.
+   */
+  date?: string;
   /** Short summary shown on the card */
   excerpt: string;
   /** Full article as plain paragraphs (simple events) */
@@ -25,12 +53,137 @@ export type DaredEvent = {
   /** Structured article (headings + bullets) for longer write-ups */
   sections?: EventSection[];
   /** Additional photos for this event */
-  gallery: string[];
+  gallery: GalleryImage[];
   featured?: boolean;
 };
 
 // All content ported from the legacy site (legacy/Page1-8.html + index.html).
 export const events: DaredEvent[] = [
+  {
+    slug: "girls-leadership-healthy-relationships-mohcam",
+    title:
+      "Empowering Girls to Build Healthy Relationships and Lead with Confidence",
+    category: "Youth",
+    image: "/images/girls-leadership-program-mohcam.jpg",
+    excerpt:
+      "DARED's Child Protection Officer, Leotine Pietamen, facilitated a session during the Girls Leadership Program with Mother of Hope Cameroon, helping participants explore self-worth, healthy boundaries, and respectful relationships.",
+    body: [
+      "As part of our commitment to advancing the rights, protection, and empowerment of girls, DARED's Child Protection Officer, Leotine Pietamen, recently facilitated a session during the Girls Leadership Program, supported by Mother of Hope Cameroon (MOHCAM).",
+      "The interactive session focused on self-worth, healthy boundaries, respectful relationships, and the importance of protecting one's peace. Through open discussions and reflective activities, participants were encouraged to express themselves, challenge harmful beliefs, and embrace the confidence to make healthy choices.",
+      "One of the most inspiring moments came as the girls began to realize that setting boundaries and expecting respect are not acts of selfishness but expressions of self-worth. By the end of the session, participants were actively encouraging one another to value themselves and build relationships rooted in mutual respect.",
+      "DARED is proud of Leotine Pietamen's dedication to creating safe spaces where girls can find their voices, strengthen their confidence, and develop the leadership skills needed to thrive.",
+      "We extend our sincere appreciation to Mother of Hope Cameroon (MOHCAM) for the opportunity to contribute to this impactful initiative. Together, we are nurturing a generation of confident, resilient, and empowered girls.",
+    ],
+    gallery: [
+      {
+        src: "/images/girls-leadership-program-mohcam-session.jpg",
+        alt: "Participants and facilitators seated on the grass around the Girls Leadership Program banner",
+        caption: "The session ran outdoors, in a circle rather than rows.",
+      },
+      {
+        src: "/images/girls-leadership-program-mohcam-facilitator.jpg",
+        alt: "A facilitator in a Toghu-patterned top leading a discussion with girls seated on the grass",
+        caption:
+          "Discussion turned to self-worth, boundaries, and protecting one's peace.",
+      },
+      {
+        src: "/images/girls-leadership-program-mohcam-group-discussion.jpg",
+        alt: "Participants and MOHCAM volunteers seated in a circle during a group discussion",
+        caption:
+          "Girls encouraged one another to expect respect in their relationships.",
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: "child-trauma-awareness-workshop-bamenda",
+    title: "Promoting Healing Through Child Trauma Awareness in Bamenda",
+    category: "Youth",
+    image: "/images/child-trauma-awareness-workshop-bamenda.jpg",
+    date: "2026-07-29",
+    excerpt:
+      "DARED's Child Protection Officer, Leotine Pietamen, led a Child Trauma Awareness Workshop at an orphanage in Bamenda, bringing together 21 children and caregivers to explore childhood trauma, emotional healing, and positive coping strategies.",
+    body: [
+      "As part of DARED's commitment to child protection and psychosocial well-being, our Child Protection Officer, Leotine Pietamen, facilitated a Child Trauma Awareness Workshop at an orphanage in Bamenda. The session brought together 21 children and caregivers to build a shared understanding of trauma and what recovery from it can look like.",
+      "The workshop created a safe and supportive space where participants could speak openly about childhood trauma, emotional healing, and positive coping strategies. Group discussions, feelings check-in activities, question-and-answer sessions, and group presentations gave both children and caregivers room to take part in conversations that fostered resilience, understanding, and hope.",
+      "Although many of the orphanage's resident children were away on the day of the workshop, the program went ahead with children from the surrounding community, made possible by the collaboration of the orphanage's caregivers.",
+      "One of the most encouraging outcomes came from the caregivers themselves, who said they had learned just as much as the children. Their reflections reaffirm why it matters to equip both children and the adults who care for them with the knowledge and skills needed to support healing and recovery.",
+      "DARED commends Leotine Pietamen for her dedication to advancing child protection and creating safe spaces where children can learn, heal, and thrive, and extends sincere gratitude to everyone whose support made this initiative possible. Together, we remain committed to protecting children, strengthening families, and building resilient communities.",
+    ],
+    gallery: [
+      {
+        src: "/images/child-trauma-awareness-workshop-session.jpg",
+        alt: "Children seated on benches on a veranda listening to the facilitator at the orphanage",
+        caption:
+          "Twenty-one children and caregivers took part in the workshop.",
+      },
+      {
+        src: "/images/child-trauma-awareness-workshop-feelings-card.jpg",
+        alt: "A printed feelings card showing eighteen emotions, from happy and grateful to worried and lonely",
+        caption:
+          "The feelings card used for the check-in activity: “It's okay to feel any of these feelings.”",
+      },
+      {
+        src: "/images/child-trauma-awareness-workshop-session-plan.jpg",
+        alt: "A handwritten notebook page setting out the workshop's purpose and facilitator",
+        caption:
+          "The session plan: understanding trauma, its causes and effects, and healthy coping strategies.",
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: "nayef-2026-national-youth-economic-forum",
+    title: "From Conversations to Action: DARED at NAYEF 2026",
+    category: "Advocacy",
+    image: "/images/national-youth-economic-forum-nayef-2026.jpg",
+    date: "2026-07-04",
+    excerpt:
+      "DARED's Director joined government officials, development partners, entrepreneurs, and fellow young leaders as a selected delegate at the first National Youth Economic Forum, returning with lessons on youth participation, collaboration, and turning talent into lasting value.",
+    sections: [
+      {
+        paragraphs: [
+          "DARED's Director, Tamfu Kilem Bongwa, represented the organization as a selected delegate at the first edition of the National Youth Economic Forum (NAYEF 2026), held under the patronage of the Ministry of Economy, Planning and Regional Development (MINEPAT).",
+          "The forum brought together government officials, development partners, entrepreneurs, innovators, creatives, and fellow young leaders, all committed to building a stronger and more inclusive economy for Cameroon.",
+        ],
+      },
+      {
+        heading: "Lessons that will stay with us",
+        bullets: [
+          "Young people must be actively involved in shaping the policies and programs that affect them. As Mr. Ngwane Denzel aptly put it, “Anything for young people without young people is against young people.”",
+          "Collaboration is more powerful than competition. When organizations and individuals work together around a shared vision, the impact is far greater.",
+          "Talent needs the right environment to thrive. Opportunities grow where there are supportive policies, accountability, access to information, and strong networks.",
+          "Creativity becomes sustainable value through branding, communication, and storytelling. Cameroon has immense talent, and more must be done to transform it into globally recognized brands.",
+          "Leadership begins with self-awareness: understanding our strengths, acknowledging our weaknesses, and committing ourselves to serving others.",
+        ],
+      },
+      {
+        paragraphs: [
+          "DARED returns from NAYEF encouraged and even more committed to advancing youth empowerment through entrepreneurship, innovation, finance, and inclusive development.",
+          "The conversations have taken place. The work now is to turn them into meaningful action.",
+        ],
+      },
+    ],
+    gallery: [
+      {
+        src: "/images/national-youth-economic-forum-nayef-2026-poster.jpg",
+        alt: "Poster for the National Youth Economic Forum on youth enterprise, investment and inclusive growth",
+        caption:
+          "The forum was held under the patronage of MINEPAT, with UNDP among the partners.",
+      },
+      {
+        src: "/images/national-youth-economic-forum-nayef-2026-panel.jpg",
+        alt: "Panellists seated at the head table addressing a full auditorium of delegates",
+        caption: "Delegates in session at the MINEPAT hall.",
+      },
+      {
+        src: "/images/national-youth-economic-forum-nayef-2026-dared-director.jpg",
+        alt: "DARED's Director standing at the back of the forum auditorium",
+        caption: "DARED's Director, Tamfu Kilem Bongwa, attended as a selected delegate.",
+      },
+    ],
+    featured: true,
+  },
   {
     slug: "undp-field-visit",
     title: "UNDP Field Visit & Recovery Project Review",
@@ -188,7 +341,7 @@ export const events: DaredEvent[] = [
     excerpt:
       "In partnership with the Regional Delegation of Arts and Culture, DARED led University of Bamenda students through the Bamendankwen Palace and Museum to deepen youth involvement in cultural preservation.",
     body: [
-      "In a vibrant effort to connect youth with their roots, Direct Actions for Rights Equity and Development (DARED) organized a cultural heritage engagement activity. This initiative, held in partnership with the Regional Delegation of Arts and Culture and the Bamendankwen Traditional Council, brought together students from the Faculty of Cultural Heritage and International Relations of the University of Bamenda to foster a deeper connection with local heritage.",
+      "In a vibrant effort to connect youth with their roots, Direct Action for Rights Equity and Development (DARED) organized a cultural heritage engagement activity. This initiative, held in partnership with the Regional Delegation of Arts and Culture and the Bamendankwen Traditional Council, brought together students from the Faculty of Cultural Heritage and International Relations of the University of Bamenda to foster a deeper connection with local heritage.",
       "The day commenced with an inspiring welcome address from the Regional Delegate for Arts and Culture, who emphasized the critical role students must play in preserving Cameroon's rich cultural identity. The Queen Mother of Bamendankwen warmly received the participants, expressing her gratitude for the visit and underscoring the palace's historical significance.",
       "Participants were then treated to an immersive guided tour of the Bamendankwen Palace, led by the Queen Mother and the Palace Secretary. Students explored the architectural layout, cultural symbols, and administrative structures of the fondom, gaining invaluable practical insight that beautifully complemented their academic studies. The tour continued at the Bamendankwen Museum, where historical artifacts brought the community's evolution to life.",
       "A key component of the program was hands-on engagement. Students actively participated in a cleaning exercise at the museum, joining palace custodians in the vital work of maintenance and preservation. Following this, DARED's Director, Tamfu Kilem Bongwa, delivered a powerful talk on volunteerism as a cornerstone of heritage protection, encouraging students to become proactive custodians in their own communities.",
@@ -257,6 +410,7 @@ export const events: DaredEvent[] = [
     title: "Film for Advocacy Workshop",
     category: "Arts",
     image: "/images/film-for-advocacy.jpg",
+    date: "2024-04-02",
     excerpt:
       "Young filmmakers from across Cameroon gained skills in advocacy filmmaking at the U.S. Embassy Yaoundé, through the Mandela Washington Fellowship Reciprocal Exchange Program.",
     body: [
@@ -399,3 +553,78 @@ export const events: DaredEvent[] = [
 ];
 
 export const featuredEvents = events.filter((e) => e.featured);
+
+/** Categories that actually have events, in the order they appear above. */
+export const activeCategories: EventCategory[] = Array.from(
+  new Set(events.map((e) => e.category))
+);
+
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+/**
+ * "2026-07-29" -> "29 July 2026". Parsed by hand rather than with `Date`, so
+ * the output cannot shift with the build machine's timezone.
+ */
+export function formatEventDate(iso: string): string | undefined {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso.trim());
+  if (!match) return undefined;
+  const month = MONTHS[Number(match[2]) - 1];
+  if (!month) return undefined;
+  return `${Number(match[3])} ${month} ${match[1]}`;
+}
+
+/** Normalises the two gallery shapes into one, defaulting alt to the title. */
+export function galleryOf(
+  event: DaredEvent,
+  locale: "en" | "fr" = "en"
+): { src: string; alt: string; caption?: string }[] {
+  const fr = locale === "fr" ? eventFr(event.slug) : undefined;
+  const title = fr?.title ?? event.title;
+
+  return event.gallery.map((item) => {
+    const base =
+      typeof item === "string" ? { src: item, alt: title } : { ...item };
+    const translated = fr?.photos?.[base.src];
+    return translated ? { src: base.src, ...translated } : base;
+  });
+}
+
+/**
+ * An event with its French text applied where a translation exists, falling
+ * back to English field by field. Written this way so adding an event without
+ * translating it yet degrades to English rather than showing blanks.
+ */
+export function localizedEvent(
+  event: DaredEvent,
+  locale: "en" | "fr"
+): DaredEvent {
+  if (locale === "en") return event;
+  const fr = eventFr(event.slug);
+  if (!fr) return event;
+
+  return {
+    ...event,
+    title: fr.title,
+    excerpt: fr.excerpt,
+    body: fr.body ?? event.body,
+    sections: fr.sections ?? event.sections,
+  };
+}
+
+/** Path to an event article in the given language. */
+export function eventHref(slug: string, locale: "en" | "fr"): string {
+  return locale === "fr" ? `/fr/evenements/${slug}/` : `/events/${slug}/`;
+}

@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/site/PageHeader";
 import { ToghuField } from "@/components/site/ToghuField";
-import { EventCard } from "@/components/site/EventCard";
+import { EventsBrowser } from "@/components/site/EventsBrowser";
 import { Container } from "@/components/ui/Container";
-import { events } from "@/data/events";
 
 export const metadata: Metadata = {
   title: "Events",
   description:
     "Explore DARED's events and initiatives in cultural heritage, environment, youth empowerment, and the arts across Cameroon.",
-  alternates: { canonical: "/events/" },
+  alternates: {
+    canonical: "/events/",
+    languages: { en: "/events/", fr: "/fr/evenements/" },
+  },
 };
 
 export default function EventsPage() {
@@ -25,11 +27,7 @@ export default function EventsPage() {
       />
       <section className="py-14 sm:py-20">
         <Container>
-          <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-            {events.map((event) => (
-              <EventCard key={event.slug} event={event} />
-            ))}
-          </div>
+          <EventsBrowser />
         </Container>
       </section>
       </div>

@@ -8,7 +8,10 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Learn about DARED, Direct Action for Rights Equity and Development, a Cameroonian non-profit for heritage, environment, and youth empowerment.",
-  alternates: { canonical: "/about/" },
+  alternates: {
+    canonical: "/about/",
+    languages: { en: "/about/", fr: "/fr/a-propos/" },
+  },
 };
 
 const values = [
@@ -72,7 +75,7 @@ export default function AboutPage() {
             {values.map((value) => (
               <div
                 key={value.title}
-                className="rounded-3xl bg-sand-100 p-8 ring-1 ring-sand-300"
+                className="reveal rounded-3xl bg-sand-100 p-8 ring-1 ring-sand-300"
               >
                 <h3 className="text-xl font-semibold text-velvet-700">
                   {value.title}

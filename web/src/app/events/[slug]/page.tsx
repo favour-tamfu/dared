@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { events } from "@/data/events";
+import { events, formatEventDate, galleryOf } from "@/data/events";
 import { Container } from "@/components/ui/Container";
 import { ToghuField } from "@/components/site/ToghuField";
 import { LightboxImage } from "@/components/site/Lightbox";
@@ -33,7 +33,13 @@ export async function generateMetadata({
   return {
     title: event.title,
     description: event.excerpt,
-    alternates: { canonical: `/events/${slug}/` },
+    alternates: {
+      canonical: `/events/${slug}/`,
+      languages: {
+        en: `/events/${slug}/`,
+        fr: `/fr/evenements/${slug}/`,
+      },
+    },
     openGraph: {
       title: event.title,
       description: event.excerpt,
@@ -60,6 +66,16 @@ export default async function EventDetailPage({
   if (!event) notFound();
 
   const badge = categoryColors[event.category] ?? "bg-velvet-600";
+  const when = event.date ? formatEventDate(event.date) : undefined;
+  const photos = galleryOf(event);
+
+  // Same category first, topped up with whatever is most recent, so an event
+  // in a category of one is not left with an empty rail.
+  const others = events.filter((e) => e.slug !== event.slug);
+  const related = [
+    ...others.filter((e) => e.category === event.category),
+    ...others.filter((e) => e.category !== event.category),
+  ].slice(0, 3);
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -68,6 +84,7 @@ export default async function EventDetailPage({
     description: event.excerpt,
     image: `https://idared.org${event.image}`,
     articleSection: event.category,
+    ...(event.date ? { datePublished: event.date } : {}),
     publisher: {
       "@type": "NGO",
       name: "DARED",
@@ -101,11 +118,21 @@ export default async function EventDetailPage({
           >
             <span aria-hidden>←</span> Back to events
           </Link>
-          <span
-            className={`mt-4 inline-block rounded-full px-3 py-1 text-xs font-semibold text-white ${badge}`}
-          >
-            {event.category}
-          </span>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <span
+              className={`inline-block rounded-full px-3 py-1 text-xs font-semibold text-white ${badge}`}
+            >
+              {event.category}
+            </span>
+            {when && (
+              <time
+                dateTime={event.date}
+                className="text-sm font-medium text-velvet-100"
+              >
+                {when}
+              </time>
+            )}
+          </div>
           <h1 className="mt-3 max-w-3xl text-balance font-display text-3xl font-semibold text-white sm:text-4xl lg:text-5xl">
             {event.title}
           </h1>
@@ -163,23 +190,59 @@ export default async function EventDetailPage({
                   <ShareButtons title={event.title} />
                 </div>
 
-                {event.gallery.length > 0 && (
+                {photos.length > 0 && (
                   <div className="mt-12">
                     <h2 className="text-sm font-semibold uppercase tracking-wider text-crimson-500">
                       Photo Gallery
                     </h2>
                     <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
-                      {event.gallery.map((src) => (
+                      {photos.map((photo) => (
                         <div
-                          key={src}
-                          className="relative aspect-square overflow-hidden rounded-2xl shadow-sm ring-1 ring-sand-300"
+                          key={photo.src}
+                          className="reveal relative aspect-square overflow-hidden rounded-2xl shadow-sm ring-1 ring-sand-300"
                         >
                           <LightboxImage
-                            src={src}
-                            alt={event.title}
+                            src={photo.src}
+                            alt={photo.alt}
+                            caption={photo.caption}
                             sizes="(max-width: 640px) 50vw, 20rem"
                           />
                         </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {related.length > 0 && (
+                  <div className="mt-14">
+                    <h2 className="text-sm font-semibold uppercase tracking-wider text-crimson-500">
+                      More from our work
+                    </h2>
+                    <div className="mt-5 grid gap-4 sm:grid-cols-3">
+                      {related.map((other) => (
+                        <Link
+                          key={other.slug}
+                          href={`/events/${other.slug}/`}
+                          className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-sand-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                        >
+                          <div className="relative aspect-[4/3] overflow-hidden">
+                            <Image
+                              src={other.image}
+                              alt=""
+                              fill
+                              sizes="(max-width: 640px) 100vw, 15rem"
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          </div>
+                          <div className="flex flex-1 flex-col p-4">
+                            <span className="text-xs font-semibold uppercase tracking-wider text-ink-soft/80">
+                              {other.category}
+                            </span>
+                            <h3 className="mt-1.5 font-display text-sm font-semibold leading-snug text-ink group-hover:text-velvet-700">
+                              {other.title}
+                            </h3>
+                          </div>
+                        </Link>
                       ))}
                     </div>
                   </div>

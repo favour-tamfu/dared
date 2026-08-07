@@ -10,7 +10,9 @@ import {
   type ReactNode,
 } from "react";
 
-type LightboxCtx = { open: (src: string, alt?: string) => void };
+type LightboxCtx = {
+  open: (src: string, alt?: string, caption?: string) => void;
+};
 
 const Ctx = createContext<LightboxCtx | null>(null);
 
@@ -22,10 +24,14 @@ export function useLightbox() {
 
 export function LightboxProvider({ children }: { children: ReactNode }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [img, setImg] = useState<{ src: string; alt: string } | null>(null);
+  const [img, setImg] = useState<{
+    src: string;
+    alt: string;
+    caption?: string;
+  } | null>(null);
 
-  const open = useCallback((src: string, alt = "") => {
-    setImg({ src, alt });
+  const open = useCallback((src: string, alt = "", caption?: string) => {
+    setImg({ src, alt, caption });
     dialogRef.current?.showModal();
   }, []);
   const close = useCallback(() => dialogRef.current?.close(), []);
@@ -41,15 +47,20 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
       >
         {img && (
           <div
-            className="relative flex items-center justify-center"
+            className="relative flex flex-col items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={img.src}
               alt={img.alt}
-              className="max-h-[90vh] max-w-[92vw] rounded-xl object-contain shadow-2xl ring-1 ring-white/10"
+              className="max-h-[82vh] max-w-[92vw] rounded-xl object-contain shadow-2xl ring-1 ring-white/10"
             />
+            {img.caption && (
+              <p className="mt-4 max-w-xl text-balance text-center text-sm leading-relaxed text-velvet-100">
+                {img.caption}
+              </p>
+            )}
             <button
               type="button"
               onClick={close}
@@ -78,16 +89,22 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
 type LightboxImageProps = {
   src: string;
   alt: string;
+  caption?: string;
   sizes?: string;
 };
 
 /** A clickable image that fills its (positioned) parent and opens the lightbox. */
-export function LightboxImage({ src, alt, sizes = "33vw" }: LightboxImageProps) {
+export function LightboxImage({
+  src,
+  alt,
+  caption,
+  sizes = "33vw",
+}: LightboxImageProps) {
   const { open } = useLightbox();
   return (
     <button
       type="button"
-      onClick={() => open(src, alt)}
+      onClick={() => open(src, alt, caption)}
       aria-label={`Enlarge image: ${alt}`}
       className="group absolute inset-0 cursor-zoom-in"
     >

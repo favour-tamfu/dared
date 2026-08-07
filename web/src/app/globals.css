@@ -177,3 +177,35 @@
     animation: none !important;
   }
 }
+
+/*
+  Gallery group separators. Drawn between visible siblings only, so filtering
+  out a category never leaves a rule hanging above the first visible group.
+*/
+.gallery-groups > section:not([hidden]) ~ section:not([hidden]) {
+  margin-top: 4rem;
+  padding-top: 4rem;
+  border-top: 1px solid var(--color-sand-300);
+}
+
+/*
+  Scroll reveal.
+
+  Deliberately opt-in: a `.reveal` element is fully visible until the
+  ScrollReveal observer marks it pending, and it only ever marks elements that
+  are below the fold. So content is never hidden by CSS the script might fail
+  to undo — no JavaScript means no animation rather than a blank page — and
+  nothing already on screen flickers at hydration.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    transition:
+      opacity 0.7s ease-out,
+      transform 0.7s ease-out;
+  }
+
+  .reveal[data-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+}

@@ -9,12 +9,15 @@ import { documents, isoMonth, mimeFor } from "@/data/documents";
 
 const SITE = "https://idared.org";
 const description =
-  "DARED's internal documents, operating procedures, and reports, gathered in one place for our team, volunteers, and partners.";
+  "DARED's activity and financial reports, internal documents, and operating procedures, gathered in one place for our team, volunteers, and partners.";
 
 export const metadata: Metadata = {
   title: "Resource Centre",
   description,
-  alternates: { canonical: "/resources/" },
+  alternates: {
+    canonical: "/resources/",
+    languages: { en: "/resources/", fr: "/fr/ressources/" },
+  },
   openGraph: {
     title: "Resource Centre | DARED",
     description,
@@ -68,7 +71,7 @@ export default function ResourcesPage() {
           <PageHeader
             eyebrow="Transparency"
             title="Resource Centre"
-            subtitle="Our internal documents, operating procedures, and reports, gathered in one place for our team, our volunteers, and the partners and communities we work with."
+            subtitle="Our activity and financial reports, internal documents, and operating procedures, gathered in one place for our team, our volunteers, and the partners and communities we work with."
           />
 
           <section className="py-14 sm:py-20">
